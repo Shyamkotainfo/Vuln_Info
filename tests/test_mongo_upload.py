@@ -1,4 +1,4 @@
-from vulnerability_pipeline.datasources.external_feeds.nvd.load import NVDLoader
+from vulnerability_pipeline.bronze.nvd.load import NVDLoader
 from datetime import datetime
 
 def test_upload_5_records():

@@ -95,10 +95,16 @@ Execution logs are saved to `pipeline.log` in the root directory.
 - **Console Output**: Shows high-level progress and summaries (e.g., "100 inserted, 50 updated").
 - **File Output**: Contains detailed debugging info and timestamps.
  
-## 🔍 Verification
+## 🧪 Testing
  
-To verify that the project structure is valid and all dependencies are correctly installed, run:
+Run the verification suite to ensure all sources are integrated correctly.
  
 ```bash
-python3 verify_structure.py
+python3 -m tests.test_all_sources
 ```
+ 
+## 📂 Project Structure
+- `vulnerability_pipeline/bronze`: Raw data ingestion (Extractors & Loaders).
+- `vulnerability_pipeline/silver`: Transformed data logic (In Progress).
+- `vulnerability_pipeline/core`: Shared utilities (Config, MongoManager, Base Classes).
+- `tests/`: Verification scripts.

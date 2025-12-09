@@ -4,16 +4,16 @@ from unittest.mock import MagicMock
 from datetime import datetime
 
 # Import classes to test
-from vulnerability_pipeline.datasources.external_feeds.nvd.extract import NVDExtractor
-from vulnerability_pipeline.datasources.external_feeds.nvd.load import NVDLoader
-from vulnerability_pipeline.datasources.external_feeds.cisa.extract import CISAExtractor
-from vulnerability_pipeline.datasources.external_feeds.cisa.load import CISALoader
-from vulnerability_pipeline.datasources.external_feeds.epss.extract import EPSSExtractor
-from vulnerability_pipeline.datasources.external_feeds.epss.load import EPSSLoader
-from vulnerability_pipeline.datasources.external_feeds.exploit.extract import ExploitDBExtractor
-from vulnerability_pipeline.datasources.external_feeds.exploit.load import ExploitDBLoader
-from vulnerability_pipeline.datasources.external_feeds.metasploit.extract import MetasploitExtractor
-from vulnerability_pipeline.datasources.external_feeds.metasploit.load import MetasploitLoader
+from vulnerability_pipeline.bronze.nvd.extract import NVDExtractor
+from vulnerability_pipeline.bronze.nvd.load import NVDLoader
+from vulnerability_pipeline.bronze.cisa.extract import CISAExtractor
+from vulnerability_pipeline.bronze.cisa.load import CISALoader
+from vulnerability_pipeline.bronze.epss.extract import EPSSExtractor
+from vulnerability_pipeline.bronze.epss.load import EPSSLoader
+from vulnerability_pipeline.bronze.exploit.extract import ExploitDBExtractor
+from vulnerability_pipeline.bronze.exploit.load import ExploitDBLoader
+from vulnerability_pipeline.bronze.metasploit.extract import MetasploitExtractor
+from vulnerability_pipeline.bronze.metasploit.load import MetasploitLoader
 
 from vulnerability_pipeline.pipeline_orchestrator import PipelineOrchestrator
 
