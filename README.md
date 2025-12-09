@@ -66,40 +66,44 @@ MONGO_URI=mongodb://localhost:27017/
 ```
 
 ## 🏃 Usage
-
-You can run individual pipelines as modules. Ensure you are in the project root.
-
-### Running Data Ingestion
-
-**NVD Pipeline:**
+ 
+The recommended way to run the pipelines is via the `pipeline_orchestrator.py`. This script handles logging, error tracking, and unified execution.
+ 
+### 1. Run All Pipelines (Full Load)
+Fetches all data from scratch (or updates everything).
 ```bash
-python3 -m vulnerability_pipeline.datasources.external_feeds.nvd.nvd_main
+python3 -m vulnerability_pipeline.pipeline_orchestrator
 ```
-
-**CISA KEV Pipeline:**
+ 
+### 2. Run All Pipelines (Incremental)
+Only fetches data newer than what is currently in the database.
 ```bash
-python3 -m vulnerability_pipeline.datasources.external_feeds.cisa.cisa_main
+python3 -m vulnerability_pipeline.pipeline_orchestrator --mode incremental
 ```
-
-**EPSS Pipeline:**
+ 
+### 3. Run Specific Sources
+You can specify one or more sources to run: `nvd`, `cisa`, `epss`, `exploit`, `metasploit`.
+ 
+**Example: NVD only**
 ```bash
-python3 -m vulnerability_pipeline.datasources.external_feeds.epss.epss_main
+python3 -m vulnerability_pipeline.pipeline_orchestrator --sources nvd
 ```
-
-**ExploitDB Pipeline:**
+ 
+**Example: CISA and Metasploit (Incremental)**
 ```bash
-python3 -m vulnerability_pipeline.datasources.external_feeds.exploit.exploit_main
+python3 -m vulnerability_pipeline.pipeline_orchestrator --sources cisa metasploit --mode incremental
 ```
-
-**Metasploit Pipeline:**
-```bash
-python3 -m vulnerability_pipeline.datasources.external_feeds.metasploit.metasploit_main
-```
-
+ 
+## 📊 Logging
+ 
+Execution logs are saved to `pipeline.log` in the root directory.
+- **Console Output**: Shows high-level progress and summaries (e.g., "100 inserted, 50 updated").
+- **File Output**: Contains detailed debugging info and timestamps.
+ 
 ## 🔍 Verification
-
+ 
 To verify that the project structure is valid and all dependencies are correctly installed, run:
-
+ 
 ```bash
 python3 verify_structure.py
 ```

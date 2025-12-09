@@ -1,0 +1,15 @@
+2025-12-09 17:57:40,704 - pipeline.orchestrator - INFO - --- Starting CISA Pipeline (full) ---
+2025-12-09 17:57:40,707 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
+2025-12-09 17:57:40,707 - pipeline.orchestrator - INFO - --- Completed CISA Pipeline ---
+2025-12-09 17:57:40,708 - pipeline.orchestrator - INFO - --- Starting EPSS Pipeline (full) ---
+2025-12-09 17:57:40,709 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
+2025-12-09 17:57:40,709 - pipeline.orchestrator - INFO - --- Completed EPSS Pipeline ---
+2025-12-09 17:57:40,709 - pipeline.orchestrator - INFO - --- Starting EXPLOIT Pipeline (full) ---
+2025-12-09 17:57:40,710 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
+2025-12-09 17:57:40,710 - pipeline.orchestrator - INFO - --- Completed EXPLOIT Pipeline ---
+2025-12-09 17:57:40,711 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline (full) ---
+2025-12-09 17:57:40,712 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
+2025-12-09 17:57:40,712 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
+2025-12-09 17:57:40,712 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline (full) ---
+2025-12-09 17:57:40,777 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
+2025-12-09 17:57:40,777 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
