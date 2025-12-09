@@ -67,21 +67,16 @@ MONGO_URI=mongodb://localhost:27017/
 
 ## 🏃 Usage
  
-The recommended way to run the pipelines is via the `pipeline_orchestrator.py`. This script handles logging, error tracking, and unified execution.
+The pipeline is designed to be intelligent. It automatically detects if data exists in the Bronze layer:
+- **First Run**: Fetches all historical data (starting from ~1970/1999).
+- **Subsequent Runs**: Fetches only new/modified data since the last ingestion (Incremental).
  
-### 1. Run All Pipelines (Full Load)
-Fetches all data from scratch (or updates everything).
+### 1. Run All Pipelines
 ```bash
 python3 -m vulnerability_pipeline.pipeline_orchestrator
 ```
  
-### 2. Run All Pipelines (Incremental)
-Only fetches data newer than what is currently in the database.
-```bash
-python3 -m vulnerability_pipeline.pipeline_orchestrator --mode incremental
-```
- 
-### 3. Run Specific Sources
+### 2. Run Specific Sources
 You can specify one or more sources to run: `nvd`, `cisa`, `epss`, `exploit`, `metasploit`.
  
 **Example: NVD only**
@@ -89,9 +84,9 @@ You can specify one or more sources to run: `nvd`, `cisa`, `epss`, `exploit`, `m
 python3 -m vulnerability_pipeline.pipeline_orchestrator --sources nvd
 ```
  
-**Example: CISA and Metasploit (Incremental)**
+**Example: CISA and Metasploit**
 ```bash
-python3 -m vulnerability_pipeline.pipeline_orchestrator --sources cisa metasploit --mode incremental
+python3 -m vulnerability_pipeline.pipeline_orchestrator --sources cisa metasploit
 ```
  
 ## 📊 Logging

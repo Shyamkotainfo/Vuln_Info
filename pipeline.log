@@ -13,3 +13,225 @@
 2025-12-09 17:57:40,712 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline (full) ---
 2025-12-09 17:57:40,777 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
 2025-12-09 17:57:40,777 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
+2025-12-09 19:34:12,726 - pipeline.orchestrator - INFO - --- Starting CISA Pipeline ---
+2025-12-09 19:34:12,733 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2024-01-01
+2025-12-09 19:34:12,735 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
+2025-12-09 19:34:12,735 - pipeline.orchestrator - INFO - --- Completed CISA Pipeline ---
+2025-12-09 19:34:12,735 - pipeline.orchestrator - INFO - --- Starting EPSS Pipeline ---
+2025-12-09 19:34:12,736 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2024-01-01
+2025-12-09 19:34:12,737 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
+2025-12-09 19:34:12,737 - pipeline.orchestrator - INFO - --- Completed EPSS Pipeline ---
+2025-12-09 19:34:12,737 - pipeline.orchestrator - INFO - --- Starting EXPLOIT Pipeline ---
+2025-12-09 19:34:12,738 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2024-01-01
+2025-12-09 19:34:12,739 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
+2025-12-09 19:34:12,739 - pipeline.orchestrator - INFO - --- Completed EXPLOIT Pipeline ---
+2025-12-09 19:34:12,739 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline ---
+2025-12-09 19:34:12,740 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2024-01-01
+2025-12-09 19:34:12,741 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
+2025-12-09 19:34:12,741 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
+2025-12-09 19:34:12,741 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline ---
+2025-12-09 19:34:12,801 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-09T11:48:28.668000
+2025-12-09 19:34:12,841 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Load Complete. Stats: {'processed': 5, 'upserted': 0, 'modified': 5, 'matched': 5}
+2025-12-09 19:34:12,841 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
+2025-12-09 19:36:27,327 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline ---
+2025-12-09 19:36:27,328 - pipeline.orchestrator - INFO - No existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 19:41:56,028 - pipeline.orchestrator - ERROR - Pipeline failed for nvd: 'list' object has no attribute 'get'
+Traceback (most recent call last):
+  File "/Users/Shyam/Documents/Vuln_Mongo/Vuln_Info/vulnerability_pipeline/pipeline_orchestrator.py", line 83, in run_pipeline
+    loader.load(data_generator)
+  File "/Users/Shyam/Documents/Vuln_Mongo/Vuln_Info/vulnerability_pipeline/datasources/base.py", line 50, in load
+    doc = self.transform(item)
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Shyam/Documents/Vuln_Mongo/Vuln_Info/vulnerability_pipeline/datasources/external_feeds/nvd/load.py", line 9, in transform
+    cve_item = item.get('cve', {})
+               ^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+2025-12-09 19:41:56,032 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
+2025-12-09 19:41:56,032 - pipeline.orchestrator - INFO - --- Starting CISA Pipeline ---
+2025-12-09 19:41:56,034 - pipeline.orchestrator - INFO - No existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 19:42:20,394 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Load Complete. Stats: {'processed': 1470, 'upserted': 1470, 'modified': 0, 'matched': 0}
+2025-12-09 19:42:20,397 - pipeline.orchestrator - INFO - --- Completed CISA Pipeline ---
+2025-12-09 19:42:20,397 - pipeline.orchestrator - INFO - --- Starting EPSS Pipeline ---
+2025-12-09 19:42:20,398 - pipeline.orchestrator - INFO - No existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 21:06:28,757 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:06:28,793 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:06:28,997 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:06:29,023 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:06:29,049 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:06:29,049 - pipeline.orchestrator - INFO - --- Starting CISA Pipeline ---
+2025-12-09 21:06:29,051 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-08
+2025-12-09 21:06:29,053 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Load Complete. Stats: {'processed': 5, 'upserted': 5, 'modified': 0, 'matched': 0}
+2025-12-09 21:06:29,053 - pipeline.orchestrator - INFO - --- Completed CISA Pipeline ---
+2025-12-09 21:06:29,054 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:06:29,054 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:06:29,054 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:06:29,054 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:06:29,054 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:06:29,054 - pipeline.orchestrator - INFO - --- Starting EPSS Pipeline ---
+2025-12-09 21:06:29,084 - pipeline.orchestrator - INFO - Found existing data. Resuming from v2025.03.14,score_date
+2025-12-09 21:06:29,085 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Load Complete. Stats: {'processed': 5, 'upserted': 5, 'modified': 0, 'matched': 0}
+2025-12-09 21:06:29,085 - pipeline.orchestrator - INFO - --- Completed EPSS Pipeline ---
+2025-12-09 21:06:29,085 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:06:29,085 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:06:29,085 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:06:29,085 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:06:29,086 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:06:29,086 - pipeline.orchestrator - INFO - --- Starting EXPLOIT Pipeline ---
+2025-12-09 21:06:29,086 - pipeline.orchestrator - INFO - No existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 21:06:29,087 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Load Complete. Stats: {'processed': 5, 'upserted': 5, 'modified': 0, 'matched': 0}
+2025-12-09 21:06:29,087 - pipeline.orchestrator - INFO - --- Completed EXPLOIT Pipeline ---
+2025-12-09 21:06:29,087 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:06:29,087 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:06:29,087 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:06:29,087 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:06:29,088 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:06:29,088 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline ---
+2025-12-09 21:06:29,088 - pipeline.orchestrator - INFO - No existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 21:06:29,088 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Load Complete. Stats: {'processed': 5, 'upserted': 5, 'modified': 0, 'matched': 0}
+2025-12-09 21:06:29,088 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
+2025-12-09 21:06:29,089 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:06:29,089 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:06:29,089 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:06:29,089 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:06:29,089 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:06:29,089 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline ---
+2025-12-09 21:06:29,090 - pipeline.orchestrator - INFO - No existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 21:06:29,090 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Load Complete. Stats: {'processed': 5, 'upserted': 5, 'modified': 0, 'matched': 0}
+2025-12-09 21:06:29,090 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
+2025-12-09 21:06:29,973 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Load Complete. Stats: {'processed': 237942, 'upserted': 237942, 'modified': 0, 'matched': 0}
+2025-12-09 21:06:29,974 - pipeline.orchestrator - INFO - --- Completed EPSS Pipeline ---
+2025-12-09 21:06:29,974 - pipeline.orchestrator - INFO - --- Starting EXPLOIT Pipeline ---
+2025-12-09 21:06:29,974 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2024-01-01
+2025-12-09 21:06:31,859 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Load Complete. Stats: {'processed': 689, 'upserted': 689, 'modified': 0, 'matched': 0}
+2025-12-09 21:06:31,859 - pipeline.orchestrator - INFO - --- Completed EXPLOIT Pipeline ---
+2025-12-09 21:06:31,859 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline ---
+2025-12-09 21:06:31,859 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2024-01-01
+2025-12-09 21:06:31,859 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-09 21:06:31,859 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
+2025-12-09 21:23:22,418 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:23:22,444 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:23:22,472 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:23:22,500 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:23:22,529 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:23:22,529 - pipeline.orchestrator - INFO - --- Starting CISA Pipeline ---
+2025-12-09 21:23:22,531 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 21:23:22,532 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Load Complete. Stats: {'processed': 5, 'upserted': 5, 'modified': 0, 'matched': 0}
+2025-12-09 21:23:22,533 - pipeline.orchestrator - INFO - --- Completed CISA Pipeline ---
+2025-12-09 21:23:22,533 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:23:22,533 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:23:22,534 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:23:22,534 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:23:22,535 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:23:22,535 - pipeline.orchestrator - INFO - --- Starting EPSS Pipeline ---
+2025-12-09 21:23:22,535 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 21:23:22,538 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Load Complete. Stats: {'processed': 5, 'upserted': 5, 'modified': 0, 'matched': 0}
+2025-12-09 21:23:22,538 - pipeline.orchestrator - INFO - --- Completed EPSS Pipeline ---
+2025-12-09 21:23:22,539 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:23:22,540 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:23:22,540 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:23:22,541 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:23:22,541 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:23:22,541 - pipeline.orchestrator - INFO - --- Starting EXPLOIT Pipeline ---
+2025-12-09 21:23:22,542 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 21:23:22,543 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Load Complete. Stats: {'processed': 5, 'upserted': 5, 'modified': 0, 'matched': 0}
+2025-12-09 21:23:22,545 - pipeline.orchestrator - INFO - --- Completed EXPLOIT Pipeline ---
+2025-12-09 21:23:22,545 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:23:22,546 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:23:22,546 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:23:22,546 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:23:22,547 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:23:22,547 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline ---
+2025-12-09 21:23:22,548 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 21:23:22,550 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Load Complete. Stats: {'processed': 5, 'upserted': 5, 'modified': 0, 'matched': 0}
+2025-12-09 21:23:22,550 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
+2025-12-09 21:23:22,551 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:23:22,551 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:23:22,552 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:23:22,552 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:23:22,552 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:23:22,552 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline ---
+2025-12-09 21:23:22,553 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 21:23:22,555 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Load Complete. Stats: {'processed': 5, 'upserted': 5, 'modified': 0, 'matched': 0}
+2025-12-09 21:23:22,555 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
+2025-12-09 21:30:12,611 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:30:12,612 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:30:12,613 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:30:12,613 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:30:12,614 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:30:12,614 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline ---
+2025-12-09 21:30:12,615 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2024-01-01T00:00:00.000
+2025-12-09 21:34:38,479 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 21:34:38,513 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 21:34:38,544 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 21:34:38,575 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 21:34:38,626 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 21:34:38,626 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline ---
+2025-12-09 21:34:38,628 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 22:07:41,343 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Load Complete. Stats: {'processed': 320744, 'upserted': 320744, 'modified': 0, 'matched': 0}
+2025-12-09 22:07:41,348 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
+2025-12-09 22:07:41,348 - pipeline.orchestrator - INFO - --- Starting CISA Pipeline ---
+2025-12-09 22:07:41,349 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 22:07:41,690 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Load Complete. Stats: {'processed': 1470, 'upserted': 1470, 'modified': 0, 'matched': 0}
+2025-12-09 22:07:41,693 - pipeline.orchestrator - INFO - --- Completed CISA Pipeline ---
+2025-12-09 22:07:41,693 - pipeline.orchestrator - INFO - --- Starting EPSS Pipeline ---
+2025-12-09 22:07:41,694 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 22:07:51,518 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Load Complete. Stats: {'processed': 304730, 'upserted': 304730, 'modified': 0, 'matched': 0}
+2025-12-09 22:07:51,518 - pipeline.orchestrator - INFO - --- Completed EPSS Pipeline ---
+2025-12-09 22:07:51,518 - pipeline.orchestrator - INFO - --- Starting EXPLOIT Pipeline ---
+2025-12-09 22:07:51,518 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 22:07:54,197 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Load Complete. Stats: {'processed': 46942, 'upserted': 46470, 'modified': 5, 'matched': 472}
+2025-12-09 22:07:54,197 - pipeline.orchestrator - INFO - --- Completed EXPLOIT Pipeline ---
+2025-12-09 22:07:54,197 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline ---
+2025-12-09 22:07:54,198 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 22:07:54,198 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-09 22:07:54,198 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
+2025-12-09 22:21:04,576 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Verified unique index on 'id'
+2025-12-09 22:21:04,577 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Verified unique index on 'cveID'
+2025-12-09 22:21:04,577 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Verified unique index on 'cve'
+2025-12-09 22:21:04,578 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Verified unique index on 'id'
+2025-12-09 22:21:04,578 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Verified unique index on 'fullname'
+2025-12-09 22:21:04,578 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline ---
+2025-12-09 22:21:05,742 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-09T01:16:55.720
+2025-12-09 22:21:16,641 - pipeline.nvd_cves_raw.loader - INFO - [nvd_cves_raw] Load Complete. Stats: {'processed': 452, 'upserted': 447, 'modified': 5, 'matched': 5}
+2025-12-09 22:21:16,643 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
+2025-12-09 22:21:16,643 - pipeline.orchestrator - INFO - --- Starting CISA Pipeline ---
+2025-12-09 22:21:16,647 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-08
+2025-12-09 22:21:16,915 - pipeline.cisa_kev_raw.loader - INFO - [cisa_kev_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-09 22:21:16,915 - pipeline.orchestrator - INFO - --- Completed CISA Pipeline ---
+2025-12-09 22:21:16,915 - pipeline.orchestrator - INFO - --- Starting EPSS Pipeline ---
+2025-12-09 22:21:17,052 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-09
+2025-12-09 22:21:18,751 - pipeline.epss_scores_raw.loader - INFO - [epss_scores_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-09 22:21:18,752 - pipeline.orchestrator - INFO - --- Completed EPSS Pipeline ---
+2025-12-09 22:21:18,752 - pipeline.orchestrator - INFO - --- Starting EXPLOIT Pipeline ---
+2025-12-09 22:21:18,809 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-08
+2025-12-09 22:21:20,469 - pipeline.exploitdb_archive_raw.loader - INFO - [exploitdb_archive_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-09 22:21:20,469 - pipeline.orchestrator - INFO - --- Completed EXPLOIT Pipeline ---
+2025-12-09 22:21:20,469 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline ---
+2025-12-09 22:21:20,471 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 22:21:20,471 - pipeline.metasploit_modules_raw.loader - INFO - [metasploit_modules_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-09 22:21:20,471 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
+2025-12-09 22:23:09,037 - pipeline.nvd_raw.loader - INFO - [nvd_raw] Verified unique index on 'id'
+2025-12-09 22:23:09,038 - pipeline.cisa_raw.loader - INFO - [cisa_raw] Verified unique index on 'cveID'
+2025-12-09 22:23:09,039 - pipeline.epss_raw.loader - INFO - [epss_raw] Verified unique index on 'cve'
+2025-12-09 22:23:09,039 - pipeline.exploitdb_raw.loader - INFO - [exploitdb_raw] Verified unique index on 'id'
+2025-12-09 22:23:09,040 - pipeline.metasploit_raw.loader - INFO - [metasploit_raw] Verified unique index on 'fullname'
+2025-12-09 22:23:09,040 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline ---
+2025-12-09 22:23:09,412 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-09T16:46:17.283
+2025-12-09 22:23:17,821 - pipeline.nvd_raw.loader - INFO - [nvd_raw] Load Complete. Stats: {'processed': 2, 'upserted': 0, 'modified': 2, 'matched': 2}
+2025-12-09 22:23:17,821 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
+2025-12-09 22:23:17,821 - pipeline.orchestrator - INFO - --- Starting CISA Pipeline ---
+2025-12-09 22:23:17,827 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-08
+2025-12-09 22:23:18,017 - pipeline.cisa_raw.loader - INFO - [cisa_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-09 22:23:18,017 - pipeline.orchestrator - INFO - --- Completed CISA Pipeline ---
+2025-12-09 22:23:18,017 - pipeline.orchestrator - INFO - --- Starting EPSS Pipeline ---
+2025-12-09 22:23:18,133 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-09
+2025-12-09 22:23:19,799 - pipeline.epss_raw.loader - INFO - [epss_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-09 22:23:19,799 - pipeline.orchestrator - INFO - --- Completed EPSS Pipeline ---
+2025-12-09 22:23:19,800 - pipeline.orchestrator - INFO - --- Starting EXPLOIT Pipeline ---
+2025-12-09 22:23:19,842 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-08
+2025-12-09 22:23:22,057 - pipeline.exploitdb_raw.loader - INFO - [exploitdb_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-09 22:23:22,058 - pipeline.orchestrator - INFO - --- Completed EXPLOIT Pipeline ---
+2025-12-09 22:23:22,058 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline ---
+2025-12-09 22:23:22,059 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-09 22:23:22,059 - pipeline.metasploit_raw.loader - INFO - [metasploit_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-09 22:23:22,059 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
