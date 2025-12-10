@@ -235,3 +235,62 @@ AttributeError: 'list' object has no attribute 'get'
 2025-12-09 22:23:22,059 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
 2025-12-09 22:23:22,059 - pipeline.metasploit_raw.loader - INFO - [metasploit_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
 2025-12-09 22:23:22,059 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
+2025-12-10 11:46:28,272 - pipeline.nvd_raw.loader - INFO - [nvd_raw] Verified unique index on 'id'
+2025-12-10 11:46:28,275 - pipeline.cisa_raw.loader - INFO - [cisa_raw] Verified unique index on 'cveID'
+2025-12-10 11:46:28,276 - pipeline.epss_raw.loader - INFO - [epss_raw] Verified unique index on 'cve'
+2025-12-10 11:46:28,277 - pipeline.exploitdb_raw.loader - INFO - [exploitdb_raw] Verified unique index on 'id'
+2025-12-10 11:46:28,277 - pipeline.metasploit_raw.loader - INFO - [metasploit_raw] Verified unique index on 'fullname'
+2025-12-10 11:46:28,277 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline ---
+2025-12-10 11:46:33,926 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-09T16:52:34.963
+2025-12-10 11:46:43,326 - pipeline.nvd_raw.loader - INFO - [nvd_raw] Load Complete. Stats: {'processed': 803, 'upserted': 215, 'modified': 588, 'matched': 588}
+2025-12-10 11:46:43,329 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
+2025-12-10 11:46:43,329 - pipeline.orchestrator - INFO - --- Starting CISA Pipeline ---
+2025-12-10 11:46:43,343 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-08
+2025-12-10 11:46:43,598 - pipeline.cisa_raw.loader - INFO - [cisa_raw] Load Complete. Stats: {'processed': 2, 'upserted': 2, 'modified': 0, 'matched': 0}
+2025-12-10 11:46:43,598 - pipeline.orchestrator - INFO - --- Completed CISA Pipeline ---
+2025-12-10 11:46:43,598 - pipeline.orchestrator - INFO - --- Starting EPSS Pipeline ---
+2025-12-10 11:46:43,910 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-09
+2025-12-10 11:46:47,962 - pipeline.epss_raw.loader - INFO - [epss_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-10 11:46:47,962 - pipeline.orchestrator - INFO - --- Completed EPSS Pipeline ---
+2025-12-10 11:46:47,962 - pipeline.orchestrator - INFO - --- Starting EXPLOIT Pipeline ---
+2025-12-10 11:46:48,081 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-08
+2025-12-10 11:46:50,166 - pipeline.exploitdb_raw.loader - INFO - [exploitdb_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-10 11:46:50,166 - pipeline.orchestrator - INFO - --- Completed EXPLOIT Pipeline ---
+2025-12-10 11:46:50,166 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline ---
+2025-12-10 11:46:50,167 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-10 11:46:50,167 - pipeline.metasploit_raw.loader - INFO - [metasploit_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-10 11:46:50,167 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
+2025-12-10 11:54:53,218 - pipeline.nvd_raw.loader - INFO - [nvd_raw] Verified unique index on 'id'
+2025-12-10 11:54:53,219 - pipeline.cisa_raw.loader - INFO - [cisa_raw] Verified unique index on 'cveID'
+2025-12-10 11:54:53,220 - pipeline.epss_raw.loader - INFO - [epss_raw] Verified unique index on 'cve'
+2025-12-10 11:54:53,220 - pipeline.exploitdb_raw.loader - INFO - [exploitdb_raw] Verified unique index on 'id'
+2025-12-10 11:54:53,220 - pipeline.metasploit_raw.loader - INFO - [metasploit_raw] Verified unique index on 'fullname'
+2025-12-10 11:54:53,220 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline ---
+2025-12-10 11:54:53,222 - pipeline.orchestrator - INFO - No valid existing data found in Bronze. Starting full load from default epoch.
+2025-12-10 11:54:55,342 - pipeline.metasploit_raw.loader - INFO - [metasploit_raw] Load Complete. Stats: {'processed': 6096, 'upserted': 6096, 'modified': 0, 'matched': 0}
+2025-12-10 11:54:55,343 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
+2025-12-10 11:55:20,575 - pipeline.nvd_raw.loader - INFO - [nvd_raw] Verified unique index on 'id'
+2025-12-10 11:55:20,576 - pipeline.cisa_raw.loader - INFO - [cisa_raw] Verified unique index on 'cveID'
+2025-12-10 11:55:20,576 - pipeline.epss_raw.loader - INFO - [epss_raw] Verified unique index on 'cve'
+2025-12-10 11:55:20,576 - pipeline.exploitdb_raw.loader - INFO - [exploitdb_raw] Verified unique index on 'id'
+2025-12-10 11:55:20,576 - pipeline.metasploit_raw.loader - INFO - [metasploit_raw] Verified unique index on 'fullname'
+2025-12-10 11:55:20,576 - pipeline.orchestrator - INFO - --- Starting NVD Pipeline ---
+2025-12-10 11:55:20,929 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-10T06:15:46.020
+2025-12-10 11:55:29,906 - pipeline.nvd_raw.loader - INFO - [nvd_raw] Load Complete. Stats: {'processed': 1, 'upserted': 0, 'modified': 1, 'matched': 1}
+2025-12-10 11:55:29,906 - pipeline.orchestrator - INFO - --- Completed NVD Pipeline ---
+2025-12-10 11:55:29,906 - pipeline.orchestrator - INFO - --- Starting CISA Pipeline ---
+2025-12-10 11:55:29,910 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-09
+2025-12-10 11:55:30,187 - pipeline.cisa_raw.loader - INFO - [cisa_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-10 11:55:30,187 - pipeline.orchestrator - INFO - --- Completed CISA Pipeline ---
+2025-12-10 11:55:30,187 - pipeline.orchestrator - INFO - --- Starting EPSS Pipeline ---
+2025-12-10 11:55:30,284 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-09
+2025-12-10 11:55:32,586 - pipeline.epss_raw.loader - INFO - [epss_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-10 11:55:32,586 - pipeline.orchestrator - INFO - --- Completed EPSS Pipeline ---
+2025-12-10 11:55:32,586 - pipeline.orchestrator - INFO - --- Starting EXPLOIT Pipeline ---
+2025-12-10 11:55:32,619 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-08
+2025-12-10 11:55:33,489 - pipeline.exploitdb_raw.loader - INFO - [exploitdb_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-10 11:55:33,489 - pipeline.orchestrator - INFO - --- Completed EXPLOIT Pipeline ---
+2025-12-10 11:55:33,489 - pipeline.orchestrator - INFO - --- Starting METASPLOIT Pipeline ---
+2025-12-10 11:55:33,506 - pipeline.orchestrator - INFO - Found existing data. Resuming from 2025-12-08 17:32:28 +0000
+2025-12-10 11:55:33,641 - pipeline.metasploit_raw.loader - INFO - [metasploit_raw] Load Complete. Stats: {'processed': 0, 'upserted': 0, 'modified': 0, 'matched': 0}
+2025-12-10 11:55:33,642 - pipeline.orchestrator - INFO - --- Completed METASPLOIT Pipeline ---
