@@ -2,3 +2,4 @@ pymongo
 requests
 pandas
 python-dotenv
+beautifulsoup4

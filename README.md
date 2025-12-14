@@ -1,110 +1,170 @@
-# Vulnerability Data Pipeline
+# Vulnerability Data Lakehouse
 
-A production-grade ETL pipeline designed to ingest, process, and analyze vulnerability data from multiple external sources. This project follows a **Data Lakehouse** architecture using MongoDB, processing data through Bronze (Raw), Silver (Cleaned), and Gold (Aggregated) layers.
+A production-grade ETL pipeline designed to ingest, process, and analyze vulnerability data from multiple external sources. This project follows a **Data Lakehouse** architecture using MongoDB, processing data through **Bronze (Raw)**, **Silver (Cleaned/Enriched)**, and **Gold (Aggregated)** layers.
+
+---
 
 ## 🏗 Architecture
 
-The pipeline currently implements the **Bronze Layer** ingestion for the following data sources:
+### 1. Bronze Layer (Raw Ingestion)
+The entry point for all data. Extractors fetch data from APIs or feeds and load it "as-is" into MongoDB. 
+**Key Feature:** Supports incremental loading (High Watermark) to only fetch new data.
 
-| Source | Description | Collection Name |
-|--------|-------------|-----------------|
-| **NVD** | National Vulnerability Database CVEs | `nvd_cves_raw` |
-| **CISA** | Known Exploited Vulnerabilities (KEV) | `cisa_kev_raw` |
-| **EPSS** | Exploit Prediction Scoring System | `epss_scores_raw` |
-| **ExploitDB** | Archive of public exploits | `exploitdb_archive_raw` |
-| **Metasploit** | Penetration testing modules | `metasploit_modules_raw` |
+| Source | Description | Collection Name | Update Strategy |
+|--------|-------------|-----------------|-----------------|
+| **NVD** | National Vulnerability Database (CVEs) | `nvd_raw` | API (Incremental Key: `lastModified`) |
+| **CISA** | Known Exploited Vulnerabilities (KEV) | `cisa_raw` | CSV Feed (Incremental Key: `dateReleased`) |
+| **EPSS** | Exploit Prediction Scoring System | `epss_raw` | CSV Feed (Incremental Key: `date`) |
+| **ExploitDB** | Archive of public exploits | `exploitdb_raw` | Scraper + CSV (Incremental Key: `date_published`) |
+| **Metasploit** | Penetration testing modules | `metasploit_raw` | JSON Feed (Incremental Key: `mod_time`) |
+
+### 2. Silver Layer (Cleaned & Enriched)
+Transforms raw data into a standardized schema.
+*   **Cleaning:** Fixing missing values, type casting (strings to dates/ints).
+*   **Flattening:** e.g., NVD Metrics (`cvssMetricV31`) are flattened to top-level columns.
+*   **Enrichment:** Maps source-specific keys to a unified schema.
+
+**Collections:** `nvd_silver`, `cisa_silver`, `epss_silver`, `exploit_silver`, `metasploit_silver`.
+
+### 3. Gold Layer (Aggregated)
+The final analytical layer. Contains **5 Collections**:
+
+**Source Mirrors (5):** Precise replicas of Silver data
+*   `gold_nvd`, `gold_cisa`, `gold_epss`, `gold_exploit`, `gold_metasploit`
+*   Controlled by `gold/mapping_config.py` (configured to pass all columns)
+
+---
 
 ## 📂 Project Structure
 
-```
+```text
 Vuln_Info/
 ├── vulnerability_pipeline/
-│   ├── core/                    # Core configuration & utilities
-│   │   ├── config.py
-│   │   └── mongo_client.py
-│   └── datasources/
-│       └── external_feeds/      # Data ingestion modules
-│           ├── cisa/
-│           ├── epss/
-│           ├── exploit/
-│           ├── metasploit/
-│           └── nvd/
-├── requirements.txt             # Project dependencies
-└── verify_structure.py          # Setup verification script
+│   ├── core/                    # Core framework (Config, DB Connection, Base Classes)
+│   ├── bronze/                  # Bronze Layer Plugins
+│   │   ├── nvd/                 # NVD Source (extract.py, load.py, __init__.py)
+│   │   ├── cisa/                # CISA Source
+│   │   ├── exploit/             # ExploitDB Source (Scraper logic here)
+│   │   └── ...
+│   ├── silver/                  # Silver Layer Plugins
+│   │   ├── nvd/                 # NVD Transformation (etl.py)
+│   │   └── ...
+│   ├── gold/                    # Gold Layer
+│   │   ├── mirrors/             # Source mirrors (nvd, cisa, etc.)
+│   │   └── mapping_config.py    # Column filters & factor definitions
+│   └── pipeline_orchestrator.py # Main entry point (Dynamic Discovery System)
+├── requirements.txt             # Dependencies
+└── pipeline.log                 # Execution logs
 ```
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.8+
-- MongoDB instance (Local or Atlas)
+*   Python 3.8+
+*   MongoDB (Local `localhost:27017` or Atlas)
 
 ### Installation
 
-1. **Clone the repository** and navigate to the project root:
-   ```bash
-   cd Vuln_Info
-   ```
+1.  **Clone & Enter:**
+    ```bash
+    cd Vuln_Info
+    ```
+2.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  **Configure Environment (Optional):**
+    Create `.env` if using a custom MongoDB URI or NVD API Key (Recommended for speed).
+    ```ini
+    MONGO_URI=mongodb://localhost:27017/
+    NVD_API_KEY=your_api_key_here
+    ```
 
-2. **Create and activate a virtual environment**:
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   ```
+---
 
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 🏃 Usage Examples
 
-### Configuration
+The `pipeline_orchestrator` is your main tool. It automatically handles incremental loading.
 
-Create a `.env` file in the root directory if you need to override the default MongoDB URI:
-
-```ini
-MONGO_URI=mongodb://localhost:27017/
-```
-
-## 🏃 Usage
- 
-The pipeline is designed to be intelligent. It automatically detects if data exists in the Bronze layer:
-- **First Run**: Fetches all historical data (starting from ~1970/1999).
-- **Subsequent Runs**: Fetches only new/modified data since the last ingestion (Incremental).
- 
-### 1. Run All Pipelines
+### 1. Run Everything (Standard Daily Job)
+Runs all Bronze extractors, then Silver transformers, then Gold aggregators.
 ```bash
 python3 -m vulnerability_pipeline.pipeline_orchestrator
 ```
- 
+
 ### 2. Run Specific Sources
-You can specify one or more sources to run: `nvd`, `cisa`, `epss`, `exploit`, `metasploit`.
- 
-**Example: NVD only**
+Useful if you only want to update NVD.
 ```bash
 python3 -m vulnerability_pipeline.pipeline_orchestrator --sources nvd
 ```
- 
-**Example: CISA and Metasploit**
+*Run multiple:*
 ```bash
 python3 -m vulnerability_pipeline.pipeline_orchestrator --sources cisa metasploit
 ```
- 
-## 📊 Logging
- 
-Execution logs are saved to `pipeline.log` in the root directory.
-- **Console Output**: Shows high-level progress and summaries (e.g., "100 inserted, 50 updated").
-- **File Output**: Contains detailed debugging info and timestamps.
- 
-## 🧪 Testing
- 
-Run the verification suite to ensure all sources are integrated correctly.
- 
+
+### 3. Run Specific Layers
+If you just want to re-process Silver without re-fetching data (e.g., after changing transformation logic).
 ```bash
-python3 -m tests.test_all_sources
+python3 -m vulnerability_pipeline.pipeline_orchestrator --layer silver
 ```
- 
-## 📂 Project Structure
-- `vulnerability_pipeline/bronze`: Raw data ingestion (Extractors & Loaders).
-- `vulnerability_pipeline/silver`: Transformed data logic (In Progress).
-- `vulnerability_pipeline/core`: Shared utilities (Config, MongoManager, Base Classes).
-- `tests/`: Verification scripts.
+*Run only Bronze:*
+```bash
+python3 -m vulnerability_pipeline.pipeline_orchestrator --layer bronze
+```
+*Run only Gold:*
+```bash
+python3 -m vulnerability_pipeline.pipeline_orchestrator --layer gold
+```
+
+### 4. Full Reload (Resetting a Source)
+If you need to re-fetch data from scratch (e.g., ExploitDB to get new scraped fields), you must drop the collections.
+```bash
+# Example: Reset ExploitDB
+python3 -c "from vulnerability_pipeline.core.mongo_client import MongoManager; db=MongoManager.get_bronze_db(); db['exploitdb_raw'].drop(); db=MongoManager.get_silver_db(); db['exploit_silver'].drop(); print('Dropped ExploitDB.')"
+
+# Then run pipeline
+python3 -m vulnerability_pipeline.pipeline_orchestrator --sources exploit --layer all
+```
+
+---
+
+
+## 🔌 Extensibility Assessment
+
+**Can this code be extended? YES.**
+
+The system uses **Dynamic Discovery** (`pkgutil`). You do **not** need to modify the Orchestrator to add new sources.
+
+### How to Add a New Source (e.g., "GitHub Advisories"):
+1.  **Create Folder**: `vulnerability_pipeline/bronze/github_advisories/`
+2.  **Implement**:
+    *   `extract.py`: Class inheriting `BaseExtractor`. Logic to fetch from GitHub API.
+    *   `load.py`: Class inheriting `BaseLoader`. Logic to save to Mongo.
+3.  **Expose**: Create `__init__.py` exporting `Extractor`, `Loader`, and `INCREMENTAL_KEY`.
+4.  **Run**: `python3 -m vulnerability_pipeline.pipeline_orchestrator`.
+    *   *Result*: The orchestrator logs `Discovered Bronze source: github_advisories` and runs it automatically.
+
+---
+
+## ⚖️ Advantages vs Drawbacks
+
+### ✅ Advantages
+1.  **Modular & Scalable**: Adding sources touches NO existing code. It's safe and isolated.
+2.  **Incremental Intelligence**: The "High Watermark" strategy ensures you don't re-download 20 years of data daily, saving bandwidth and time.
+3.  **Data Lakehouse Power**: Storing raw data (Bronze) allows you to fix transformation bugs in Silver *without* re-fetching the original data.
+4.  **Rich Data**: Custom scrapers (like ExploitDB) fetch data that isn't available in standard feeds (Screenshots, Verification status).
+
+### ⚠️ Drawbacks
+1.  **Initial Load Time**:
+    *   NVD (API): Can take 1-2 hours initially due to rate limits.
+    *   ExploitDB (Scraper): Scraping 46k pages takes **~12 hours** for a full fresh load (1s/page).
+    *   *Mitigation*: Incremental runs take seconds. Use `SAFE_LIMIT` in `extract.py` for testing.
+2.  **Scraper Fragility**:
+    *   If Exploit-DB changes their HTML structure, the scraper (`extract.py`) will break and return `null` for fields like `verified`.
+    *   *Mitigation*: The pipeline won't crash (caught exceptions), but data will be incomplete until code is updated.
+3.  **Storage**: Storing both Raw and Silver duplicates data volume. (However, storage is cheap; compute/bandwidth is expensive).
+
+---
+*Built with ❤️ for Vulnerability Research.*
