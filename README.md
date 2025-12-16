@@ -130,7 +130,6 @@ python3 -m vulnerability_pipeline.pipeline_orchestrator --sources exploit --laye
 
 ---
 
-
 ## 🔌 Extensibility Assessment
 
 **Can this code be extended? YES.**

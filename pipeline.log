@@ -22922,3 +22922,41 @@ AttributeError: 'list' object has no attribute 'get'
 2025-12-13 16:21:27,761 - pipeline.orchestrator - INFO - --- Running Gold Mirror: EXPLOIT ---
 2025-12-13 16:23:36,470 - pipeline.orchestrator - INFO - --- Running Gold Mirror: METASPLOIT ---
 2025-12-13 16:23:36,774 - pipeline.orchestrator - INFO - --- Running Gold Mirror: NVD ---
+2025-12-16 13:16:45,944 - pipeline.orchestrator - INFO - Discovered Bronze source: cisa
+2025-12-16 13:16:45,972 - pipeline.orchestrator - INFO - Discovered Bronze source: epss
+2025-12-16 13:16:46,020 - pipeline.orchestrator - INFO - Discovered Bronze source: exploit
+2025-12-16 13:16:46,025 - pipeline.orchestrator - INFO - Discovered Bronze source: metasploit
+2025-12-16 13:16:46,031 - pipeline.orchestrator - INFO - Discovered Bronze source: nvd
+2025-12-16 13:16:46,037 - pipeline.orchestrator - INFO - Discovered Silver pipeline: cisa
+2025-12-16 13:16:46,042 - pipeline.orchestrator - INFO - Discovered Silver pipeline: epss
+2025-12-16 13:16:46,048 - pipeline.orchestrator - INFO - Discovered Silver pipeline: exploit
+2025-12-16 13:16:46,050 - pipeline.orchestrator - INFO - Discovered Silver pipeline: metasploit
+2025-12-16 13:16:46,054 - pipeline.orchestrator - INFO - Discovered Silver pipeline: nvd
+2025-12-16 13:16:46,061 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: cisa
+2025-12-16 13:16:46,061 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: epss
+2025-12-16 13:16:46,062 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: exploit
+2025-12-16 13:16:46,063 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: metasploit
+2025-12-16 13:16:46,064 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: nvd
+2025-12-16 13:16:46,064 - pipeline.orchestrator - INFO - === Starting Bronze Layer ===
+2025-12-16 13:16:46,064 - pipeline.orchestrator - INFO - --- Running Bronze: CISA ---
+2025-12-16 13:16:46,109 - pipeline.orchestrator - INFO - Resuming from 2025-12-11
+2025-12-16 13:16:46,479 - pipeline.orchestrator - INFO - --- Running Bronze: EPSS ---
+2025-12-16 13:16:46,965 - pipeline.orchestrator - INFO - Resuming from 2025-12-11
+2025-12-16 13:16:57,529 - pipeline.orchestrator - INFO - --- Running Bronze: EXPLOIT ---
+2025-12-16 13:16:57,623 - pipeline.orchestrator - INFO - Resuming from 2025-12-08
+2025-12-16 13:16:58,455 - pipeline.orchestrator - INFO - --- Running Bronze: METASPLOIT ---
+2025-12-16 13:16:58,508 - pipeline.orchestrator - INFO - Resuming from 2025-12-11 20:03:17 +0000
+2025-12-16 13:16:59,699 - pipeline.orchestrator - INFO - --- Running Bronze: NVD ---
+2025-12-16 13:17:08,620 - pipeline.orchestrator - INFO - Resuming from 2025-12-12T11:15:51.250
+2025-12-16 13:18:19,516 - pipeline.orchestrator - INFO - === Starting Silver Layer ===
+2025-12-16 13:18:19,518 - pipeline.orchestrator - INFO - --- Running Silver: CISA ---
+2025-12-16 13:18:19,553 - pipeline.orchestrator - INFO - --- Running Silver: EPSS ---
+2025-12-16 13:18:28,549 - pipeline.orchestrator - INFO - --- Running Silver: EXPLOIT ---
+2025-12-16 13:18:28,569 - pipeline.orchestrator - INFO - --- Running Silver: METASPLOIT ---
+2025-12-16 13:18:28,576 - pipeline.orchestrator - INFO - --- Running Silver: NVD ---
+2025-12-16 13:18:28,974 - pipeline.orchestrator - INFO - === Starting Gold Layer ===
+2025-12-16 13:18:28,974 - pipeline.orchestrator - INFO - --- Running Gold Mirror: CISA ---
+2025-12-16 13:18:29,026 - pipeline.orchestrator - INFO - --- Running Gold Mirror: EPSS ---
+2025-12-16 13:18:34,080 - pipeline.orchestrator - INFO - --- Running Gold Mirror: EXPLOIT ---
+2025-12-16 13:21:13,481 - pipeline.orchestrator - INFO - --- Running Gold Mirror: METASPLOIT ---
+2025-12-16 13:21:13,887 - pipeline.orchestrator - INFO - --- Running Gold Mirror: NVD ---
