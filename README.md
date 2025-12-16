@@ -130,6 +130,34 @@ python3 -m vulnerability_pipeline.pipeline_orchestrator --sources exploit --laye
 
 ---
 
+---
+
+## ☁️ Migrating to Atlas
+
+A built-in tool is provided to migrate your Local data to MongoDB Atlas.
+
+### 1. Setup
+Ensure your `.env` file has both URIs:
+```ini
+LOCAL_MONGO_URI=mongodb://localhost:27017/
+MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/
+```
+
+### 2. Run Migration
+Use the `copy_local_to_atlas.py` script.
+
+**Copy All Data:**
+```bash
+python3 copy_local_to_atlas.py --scope all
+```
+
+**Copy Only Gold Layer:**
+```bash
+python3 copy_local_to_atlas.py --scope gold
+```
+
+---
+
 ## 🔌 Extensibility Assessment
 
 **Can this code be extended? YES.**

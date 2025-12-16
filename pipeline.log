@@ -22960,3 +22960,35 @@ AttributeError: 'list' object has no attribute 'get'
 2025-12-16 13:18:34,080 - pipeline.orchestrator - INFO - --- Running Gold Mirror: EXPLOIT ---
 2025-12-16 13:21:13,481 - pipeline.orchestrator - INFO - --- Running Gold Mirror: METASPLOIT ---
 2025-12-16 13:21:13,887 - pipeline.orchestrator - INFO - --- Running Gold Mirror: NVD ---
+2025-12-16 14:48:00,479 - pipeline.orchestrator - INFO - Discovered Bronze source: cisa
+2025-12-16 14:48:06,301 - pipeline.orchestrator - ERROR - Error loading Bronze source cisa: SSL handshake failed: ac-2eqnmgq-shard-00-02.rud4web.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1006) (configured timeouts: connectTimeoutMS: 20000.0ms)
+2025-12-16 14:48:06,315 - pipeline.orchestrator - INFO - Discovered Bronze source: epss
+2025-12-16 14:48:12,620 - pipeline.epss_raw.loader - WARNING - [epss_raw] Could not create index: SSL handshake failed: ac-2eqnmgq-shard-00-02.rud4web.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1006) (configured timeouts: connectTimeoutMS: 20000.0ms)
+2025-12-16 14:48:12,721 - pipeline.orchestrator - INFO - Discovered Bronze source: exploit
+2025-12-16 14:52:10,624 - pipeline.orchestrator - INFO - Discovered Bronze source: cisa
+2025-12-16 14:52:14,463 - pipeline.orchestrator - ERROR - Error loading Bronze source cisa: SSL handshake failed: ac-2eqnmgq-shard-00-02.rud4web.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1006) (configured timeouts: connectTimeoutMS: 20000.0ms)
+2025-12-16 14:52:14,476 - pipeline.orchestrator - INFO - Discovered Bronze source: epss
+2025-12-16 14:52:15,637 - pipeline.epss_raw.loader - WARNING - [epss_raw] Could not create index: SSL handshake failed: ac-2eqnmgq-shard-00-02.rud4web.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1006) (configured timeouts: connectTimeoutMS: 20000.0ms)
+2025-12-16 14:52:15,723 - pipeline.orchestrator - INFO - Discovered Bronze source: exploit
+2025-12-16 14:52:16,856 - pipeline.exploitdb_raw.loader - WARNING - [exploitdb_raw] Could not create index: SSL handshake failed: ac-2eqnmgq-shard-00-02.rud4web.mongodb.net:27017: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1006) (configured timeouts: connectTimeoutMS: 20000.0ms)
+2025-12-16 14:52:16,862 - pipeline.orchestrator - INFO - Discovered Bronze source: metasploit
+2025-12-16 15:12:31,664 - pipeline.orchestrator - INFO - Discovered Bronze source: cisa
+2025-12-16 15:12:35,378 - pipeline.orchestrator - INFO - Discovered Bronze source: epss
+2025-12-16 15:12:35,738 - pipeline.orchestrator - INFO - Discovered Bronze source: exploit
+2025-12-16 15:12:36,000 - pipeline.orchestrator - INFO - Discovered Bronze source: metasploit
+2025-12-16 15:12:36,276 - pipeline.orchestrator - INFO - Discovered Bronze source: nvd
+2025-12-16 15:12:36,276 - pipeline.orchestrator - ERROR - Error loading Bronze source nvd: type object 'Config' has no attribute 'NVD_API_KEY'
+2025-12-16 15:12:36,288 - pipeline.orchestrator - INFO - Discovered Silver pipeline: cisa
+2025-12-16 15:12:36,808 - pipeline.orchestrator - INFO - Discovered Silver pipeline: epss
+2025-12-16 15:12:37,341 - pipeline.orchestrator - INFO - Discovered Silver pipeline: exploit
+2025-12-16 15:12:37,916 - pipeline.orchestrator - INFO - Discovered Silver pipeline: metasploit
+2025-12-16 15:12:38,427 - pipeline.orchestrator - INFO - Discovered Silver pipeline: nvd
+2025-12-16 15:12:38,966 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: cisa
+2025-12-16 15:12:38,971 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: epss
+2025-12-16 15:12:38,975 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: exploit
+2025-12-16 15:12:38,978 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: metasploit
+2025-12-16 15:12:38,980 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: nvd
+2025-12-16 15:12:38,981 - pipeline.orchestrator - INFO - === Starting Bronze Layer ===
+2025-12-16 15:12:38,981 - pipeline.orchestrator - INFO - --- Running Bronze: CISA ---
+2025-12-16 15:12:46,369 - pipeline.orchestrator - INFO - --- Running Bronze: EPSS ---
+2025-12-16 15:12:49,885 - pipeline.orchestrator - INFO - --- Running Bronze: EXPLOIT ---
