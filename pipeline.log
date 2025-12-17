@@ -22992,3 +22992,52 @@ AttributeError: 'list' object has no attribute 'get'
 2025-12-16 15:12:38,981 - pipeline.orchestrator - INFO - --- Running Bronze: CISA ---
 2025-12-16 15:12:46,369 - pipeline.orchestrator - INFO - --- Running Bronze: EPSS ---
 2025-12-16 15:12:49,885 - pipeline.orchestrator - INFO - --- Running Bronze: EXPLOIT ---
+2025-12-16 23:14:31,851 - pipeline.orchestrator - INFO - Discovered Bronze source: cisa
+2025-12-16 23:14:52,141 - pipeline.orchestrator - ERROR - Error loading Bronze source cisa: SSL handshake failed: localhost:27017: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 20.0s, Topology Description: <TopologyDescription id: 69419a7f0fbe733e2578f261, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: localhost:27017: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-12-16 23:14:52,152 - pipeline.orchestrator - INFO - Discovered Bronze source: epss
+2025-12-16 23:15:12,422 - pipeline.epss_raw.loader - WARNING - [epss_raw] Could not create index: SSL handshake failed: localhost:27017: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 20.0s, Topology Description: <TopologyDescription id: 69419a7f0fbe733e2578f261, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: localhost:27017: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-12-16 23:15:12,508 - pipeline.orchestrator - INFO - Discovered Bronze source: exploit
+2025-12-16 23:15:32,690 - pipeline.exploitdb_raw.loader - WARNING - [exploitdb_raw] Could not create index: SSL handshake failed: localhost:27017: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 20.0s, Topology Description: <TopologyDescription id: 69419a7f0fbe733e2578f261, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: localhost:27017: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-12-16 23:15:32,698 - pipeline.orchestrator - INFO - Discovered Bronze source: metasploit
+2025-12-16 23:15:52,972 - pipeline.metasploit_raw.loader - WARNING - [metasploit_raw] Could not create index: SSL handshake failed: localhost:27017: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 20.0s, Topology Description: <TopologyDescription id: 69419a7f0fbe733e2578f261, topology_type: Unknown, servers: [<ServerDescription ('localhost', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('SSL handshake failed: localhost:27017: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1006) (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-12-16 23:15:52,989 - pipeline.orchestrator - INFO - Discovered Bronze source: nvd
+2025-12-16 23:15:52,989 - pipeline.orchestrator - ERROR - Error loading Bronze source nvd: type object 'Config' has no attribute 'NVD_API_KEY'
+2025-12-16 23:15:52,999 - pipeline.orchestrator - INFO - Discovered Silver pipeline: cisa
+2025-12-16 23:18:24,564 - pipeline.orchestrator - INFO - Discovered Bronze source: cisa
+2025-12-16 23:18:24,580 - pipeline.orchestrator - INFO - Discovered Bronze source: epss
+2025-12-16 23:18:24,639 - pipeline.orchestrator - INFO - Discovered Bronze source: exploit
+2025-12-16 23:18:24,643 - pipeline.orchestrator - INFO - Discovered Bronze source: metasploit
+2025-12-16 23:18:24,646 - pipeline.orchestrator - INFO - Discovered Bronze source: nvd
+2025-12-16 23:18:24,652 - pipeline.orchestrator - INFO - Discovered Silver pipeline: cisa
+2025-12-16 23:18:24,657 - pipeline.orchestrator - INFO - Discovered Silver pipeline: epss
+2025-12-16 23:18:24,661 - pipeline.orchestrator - INFO - Discovered Silver pipeline: exploit
+2025-12-16 23:18:24,664 - pipeline.orchestrator - INFO - Discovered Silver pipeline: metasploit
+2025-12-16 23:18:24,666 - pipeline.orchestrator - INFO - Discovered Silver pipeline: nvd
+2025-12-16 23:18:24,671 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: cisa
+2025-12-16 23:18:24,672 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: epss
+2025-12-16 23:18:24,672 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: exploit
+2025-12-16 23:18:24,673 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: metasploit
+2025-12-16 23:18:24,674 - pipeline.orchestrator - INFO - Discovered Gold mirrors pipeline: nvd
+2025-12-16 23:18:24,674 - pipeline.orchestrator - INFO - === Starting Bronze Layer ===
+2025-12-16 23:18:24,674 - pipeline.orchestrator - INFO - --- Running Bronze: CISA ---
+2025-12-16 23:18:24,687 - pipeline.orchestrator - INFO - Resuming from 2025-12-15
+2025-12-16 23:18:24,876 - pipeline.orchestrator - INFO - --- Running Bronze: EPSS ---
+2025-12-16 23:18:25,163 - pipeline.orchestrator - INFO - Resuming from 2025-12-15
+2025-12-16 23:18:34,727 - pipeline.orchestrator - INFO - --- Running Bronze: EXPLOIT ---
+2025-12-16 23:18:34,900 - pipeline.orchestrator - INFO - Resuming from 2025-12-08
+2025-12-16 23:18:36,299 - pipeline.orchestrator - INFO - --- Running Bronze: METASPLOIT ---
+2025-12-16 23:18:36,369 - pipeline.orchestrator - INFO - Resuming from 2025-12-15 13:46:15 +0000
+2025-12-16 23:18:37,469 - pipeline.orchestrator - INFO - --- Running Bronze: NVD ---
+2025-12-16 23:18:46,925 - pipeline.orchestrator - INFO - Resuming from 2025-12-16T07:15:54.480
+2025-12-16 23:19:05,121 - pipeline.orchestrator - INFO - === Starting Silver Layer ===
+2025-12-16 23:19:05,121 - pipeline.orchestrator - INFO - --- Running Silver: CISA ---
+2025-12-16 23:19:05,130 - pipeline.orchestrator - INFO - --- Running Silver: EPSS ---
+2025-12-16 23:19:13,084 - pipeline.orchestrator - INFO - --- Running Silver: EXPLOIT ---
+2025-12-16 23:19:13,105 - pipeline.orchestrator - INFO - --- Running Silver: METASPLOIT ---
+2025-12-16 23:19:13,169 - pipeline.orchestrator - INFO - --- Running Silver: NVD ---
+2025-12-16 23:19:13,521 - pipeline.orchestrator - INFO - === Starting Gold Layer ===
+2025-12-16 23:19:13,521 - pipeline.orchestrator - INFO - --- Running Gold Mirror: CISA ---
+2025-12-16 23:19:13,598 - pipeline.orchestrator - INFO - --- Running Gold Mirror: EPSS ---
+2025-12-16 23:19:19,056 - pipeline.orchestrator - INFO - --- Running Gold Mirror: EXPLOIT ---
+2025-12-16 23:21:30,109 - pipeline.orchestrator - INFO - --- Running Gold Mirror: METASPLOIT ---
+2025-12-16 23:21:30,560 - pipeline.orchestrator - INFO - --- Running Gold Mirror: NVD ---

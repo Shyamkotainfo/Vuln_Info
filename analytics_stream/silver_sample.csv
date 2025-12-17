@@ -1,3 +1,0 @@
-cveID,vulnerabilityName,dateAdded,cwes,knownRansomwareCampaignUse,vrr_score
-CVE-2022-37055,D-Link Buffer Overflow,2025-12-08,"['CWE-120']",Unknown,9.5
-CVE-2021-44228,Log4Shell,2021-12-10,"['CWE-502', 'CWE-400']",Known,10.0

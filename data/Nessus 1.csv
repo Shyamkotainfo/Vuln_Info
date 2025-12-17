@@ -1,0 +1,200 @@
+Plugin ID,CVE,CVSS,Risk,Host,Protocol,Port,Name,Synopsis,Description,Solution,See Also,
+95631,CVE-2004-2761,,None,10.10.1.21,tcp,443,SSL Certificate Signed Using Weak Hashing Algorithm (Known CA),A known CA SSL certificate in the certificate chain has been signed using a weak hashing algorithm.,"The remote service uses a known CA certificate in the SSL certificate chain that has been signed using a cryptographically weak hashing algorithm (e.g., MD2, MD4, MD5, or SHA1). These signature algorithms are known to be vulnerable to collision attacks. An attacker can exploit this to generate another certificate with the same digital signature, allowing the attacker to masquerade as the affected service.
+
+Note that this plugin reports all SSL certificate chains signed with SHA-1 that expire after January 1, 2017 as vulnerable. This is in accordance with Google's gradual sunsetting of the SHA-1 cryptographic hash algorithm.",Contact the Certificate Authority to have the certificate reissued.,"https://tools.ietf.org/html/rfc3279
+https://docs.microsoft.com/en-us/security-updates/SecurityAdvisories/2008/961509",
+10114,CVE-1999-0524,0,None,10.10.1.230,icmp,0,ICMP Timestamp Request Remote Date Disclosure,It is possible to determine the exact time set on the remote host.,"The remote host answers to an ICMP timestamp request.  This allows an attacker to know the date that is set on the targeted machine, which may assist an unauthenticated, remote attacker in defeating time-based authentication protocols.
+
+Timestamps returned from machines running Windows Vista / 7 / 2008 / 2008 R2 are deliberately incorrect, but usually within 1000 seconds of the actual system time.","Filter out the ICMP timestamp requests (13), and the outgoing ICMP timestamp replies (14).",,
+10882,CVE-2001-0361,7.5,High,10.10.1.230,tcp,22,SSH Protocol Version 1 Session Key Retrieval,The remote service offers an insecure cryptographic protocol.,"The remote SSH daemon supports connections made using the version 1.33 and/or 1.5 of the SSH protocol. 
+
+These protocols are not completely cryptographically safe so they should not be used.",Disable compatibility with version 1 of the protocol.,,
+10882,CVE-2001-0572,7.5,High,10.10.1.230,tcp,22,SSH Protocol Version 1 Session Key Retrieval,The remote service offers an insecure cryptographic protocol.,"The remote SSH daemon supports connections made using the version 1.33 and/or 1.5 of the SSH protocol. 
+
+These protocols are not completely cryptographically safe so they should not be used.",Disable compatibility with version 1 of the protocol.,,
+10882,CVE-2001-1473,7.5,High,10.10.1.230,tcp,22,SSH Protocol Version 1 Session Key Retrieval,The remote service offers an insecure cryptographic protocol.,"The remote SSH daemon supports connections made using the version 1.33 and/or 1.5 of the SSH protocol. 
+
+These protocols are not completely cryptographically safe so they should not be used.",Disable compatibility with version 1 of the protocol.,,
+35291,CVE-2004-2761,5,Medium,10.10.1.230,tcp,443,SSL Certificate Signed Using Weak Hashing Algorithm,An SSL certificate in the certificate chain has been signed using a weak hash algorithm.,"The remote service uses an SSL certificate chain that has been signed using a cryptographically weak hashing algorithm (e.g. MD2, MD4, MD5, or SHA1). These signature algorithms are known to be vulnerable to collision attacks. An attacker can exploit this to generate another certificate with the same digital signature, allowing an attacker to masquerade as the affected service.
+
+Note that this plugin reports all SSL certificate chains signed with SHA-1 that expire after January 1, 2017 as vulnerable. This is in accordance with Google's gradual sunsetting of the SHA-1 cryptographic hash algorithm.
+
+Note that certificates in the chain that are contained in the Nessus CA database (known_CA.inc) have been ignored.",Contact the Certificate Authority to have the certificate reissued.,"https://tools.ietf.org/html/rfc3279
+http://www.nessus.org/u?9bb87bf2
+http://www.nessus.org/u?e120eea1
+http://www.nessus.org/u?5d894816
+http://www.nessus.org/u?51db68aa
+http://www.nessus.org/u?9dc7bfba",
+42873,CVE-2016-2183,5,Medium,10.10.1.230,tcp,443,SSL Medium Strength Cipher Suites Supported (SWEET32),The remote service supports the use of medium strength SSL ciphers.,"The remote host supports the use of SSL ciphers that offer medium strength encryption. Nessus regards medium strength as any encryption that uses key lengths at least 64 bits and less than 112 bits, or else that uses the 3DES encryption suite.
+
+Note that it is considerably easier to circumvent medium strength encryption if the attacker is on the same physical network.",Reconfigure the affected application if possible to avoid use of medium strength ciphers.,"https://www.openssl.org/blog/blog/2016/08/24/sweet32/
+https://sweet32.info",
+70658,CVE-2008-5161,2.6,Low,10.10.1.230,tcp,22,SSH Server CBC Mode Ciphers Enabled,The SSH server is configured to use Cipher Block Chaining.,"The SSH server is configured to support Cipher Block Chaining (CBC) encryption.  This may allow an attacker to recover the plaintext message from the ciphertext. 
+
+Note that this plugin only checks for the options of the SSH server and does not check for vulnerable software versions.","Contact the vendor or consult product documentation to disable CBC mode cipher encryption, and enable CTR or GCM cipher mode encryption.",,
+78479,CVE-2014-3566,4.3,Medium,10.10.1.230,tcp,443,SSLv3 Padding Oracle On Downgraded Legacy Encryption Vulnerability (POODLE),It is possible to obtain sensitive information from the remote host with SSL/TLS-enabled services.,"The remote host is affected by a man-in-the-middle (MitM) information disclosure vulnerability known as POODLE. The vulnerability is due to the way SSL 3.0 handles padding bytes when decrypting messages encrypted using block ciphers in cipher block chaining (CBC) mode.
+MitM attackers can decrypt a selected byte of a cipher text in as few as 256 tries if they are able to force a victim application to repeatedly send the same data over newly created SSL 3.0 connections.
+
+As long as a client and service both support SSLv3, a connection can be 'rolled back' to SSLv3, even if TLSv1 or newer is supported by the client and service.
+
+The TLS Fallback SCSV mechanism prevents 'version rollback' attacks without impacting legacy clients; however, it can only protect connections when the client and service support the mechanism. Sites that cannot disable SSLv3 immediately should enable this mechanism.
+
+This is a vulnerability in the SSLv3 specification, not in any particular SSL implementation. Disabling SSLv3 is the only way to completely mitigate the vulnerability.","Disable SSLv3.
+
+Services that must support SSLv3 should enable the TLS Fallback SCSV mechanism until SSLv3 can be disabled.","https://www.imperialviolet.org/2014/10/14/poodle.html
+https://www.openssl.org/~bodo/ssl-poodle.pdf
+https://tools.ietf.org/html/draft-ietf-tls-downgrade-scsv-00",
+10114,CVE-1999-0524,0,None,10.10.2.10,icmp,0,ICMP Timestamp Request Remote Date Disclosure,It is possible to determine the exact time set on the remote host.,"The remote host answers to an ICMP timestamp request.  This allows an attacker to know the date that is set on the targeted machine, which may assist an unauthenticated, remote attacker in defeating time-based authentication protocols.
+
+Timestamps returned from machines running Windows Vista / 7 / 2008 / 2008 R2 are deliberately incorrect, but usually within 1000 seconds of the actual system time.","Filter out the ICMP timestamp requests (13), and the outgoing ICMP timestamp replies (14).",,
+10223,CVE-1999-0632,0,None,10.10.2.10,udp,111,RPC portmapper Service Detection,An ONC RPC portmapper is running on the remote host.,"The RPC portmapper is running on this port.
+
+The portmapper allows someone to get the port number of each RPC service running on the remote host by sending either multiple lookup requests or a DUMP request.",n/a,,
+42873,CVE-2016-2183,5,Medium,10.10.2.10,tcp,10000,SSL Medium Strength Cipher Suites Supported (SWEET32),The remote service supports the use of medium strength SSL ciphers.,"The remote host supports the use of SSL ciphers that offer medium strength encryption. Nessus regards medium strength as any encryption that uses key lengths at least 64 bits and less than 112 bits, or else that uses the 3DES encryption suite.
+
+Note that it is considerably easier to circumvent medium strength encryption if the attacker is on the same physical network.",Reconfigure the affected application if possible to avoid use of medium strength ciphers.,"https://www.openssl.org/blog/blog/2016/08/24/sweet32/
+https://sweet32.info",
+65821,CVE-2013-2566,2.6,Low,10.10.2.10,tcp,10000,SSL RC4 Cipher Suites Supported (Bar Mitzvah),The remote service supports the use of the RC4 cipher.,"The remote host supports the use of RC4 in one or more cipher suites.
+The RC4 cipher is flawed in its generation of a pseudo-random stream of bytes so that a wide variety of small biases are introduced into the stream, decreasing its randomness.
+
+If plaintext is repeatedly encrypted (e.g., HTTP cookies), and an attacker is able to obtain many (i.e., tens of millions) ciphertexts, the attacker may be able to derive the plaintext.","Reconfigure the affected application, if possible, to avoid use of RC4 ciphers. Consider using TLS 1.2 with AES-GCM suites subject to browser and web server support.","http://www.nessus.org/u?ac7327a0
+http://cr.yp.to/talks/2013.03.12/slides.pdf
+http://www.isg.rhul.ac.uk/tls/
+https://www.imperva.com/docs/HII_Attacking_SSL_when_using_RC4.pdf",
+65821,CVE-2015-2808,2.6,Low,10.10.2.10,tcp,10000,SSL RC4 Cipher Suites Supported (Bar Mitzvah),The remote service supports the use of the RC4 cipher.,"The remote host supports the use of RC4 in one or more cipher suites.
+The RC4 cipher is flawed in its generation of a pseudo-random stream of bytes so that a wide variety of small biases are introduced into the stream, decreasing its randomness.
+
+If plaintext is repeatedly encrypted (e.g., HTTP cookies), and an attacker is able to obtain many (i.e., tens of millions) ciphertexts, the attacker may be able to derive the plaintext.","Reconfigure the affected application, if possible, to avoid use of RC4 ciphers. Consider using TLS 1.2 with AES-GCM suites subject to browser and web server support.","http://www.nessus.org/u?ac7327a0
+http://cr.yp.to/talks/2013.03.12/slides.pdf
+http://www.isg.rhul.ac.uk/tls/
+https://www.imperva.com/docs/HII_Attacking_SSL_when_using_RC4.pdf",
+127911,CVE-2019-15107,10,Critical,10.10.2.10,tcp,10000,"Webmin 1.890 - 1.920 Remote Command Execution (CVE-2019-15107, CVE-2019-15231)",The remote web server is affected by a remote command execution vulnerability.,"The Webmin install hosted on the remote host is affected by a remote command execution vulnerability. A remote, unauthenticated attacker and exploit this to execute arbitrary commands on the remote host.",Update to webmin 1.930 or later.,http://www.webmin.com/changes.html,
+10287,,,None,10.10.1.20,udp,0,Traceroute Information,It was possible to obtain traceroute information.,Makes a traceroute to the remote host.,n/a,,"For your information, here is the traceroute from 10.10.2.226 to 10.10.1.20 : 
+10.10.2.226
+10.10.2.230
+?
+10.10.1.20
+
+Hop Count: 3
+"
+10302,,,None,10.10.1.20,tcp,80,Web Server robots.txt Information Disclosure,The remote web server contains a 'robots.txt' file.,The remote host contains a file named 'robots.txt' that is intended to prevent web 'robots' from visiting certain directories in a website for maintenance or indexing purposes.  A malicious user may also be able to use the contents of this file to learn of sensitive documents or directories on the affected site and either retrieve them directly or target them for other attacks.,"Review the contents of the site's robots.txt file, use Robots META tags instead of entries in the robots.txt file, and/or adjust the web server's access controls to limit access to sensitive material.",http://www.robotstxt.org/orig.html,"Contents of robots.txt :
+
+User-agent: *
+Disallow:
+"
+11219,,,None,10.10.1.20,tcp,80,Nessus SYN scanner,It is possible to determine which TCP ports are open.,"This plugin is a SYN 'half-open' port scanner.  It shall be reasonably quick even against a firewalled target. 
+
+Note that SYN scans are less intrusive than TCP (full connect) scans against broken services, but they might cause problems for less robust firewalls and also leave unclosed connections on the remote target, if the network is loaded.",Protect your target with an IP filter.,,Port 80/tcp was found to be open
+11936,,,None,10.10.1.20,tcp,0,OS Identification,It is possible to guess the remote operating system.,"Using a combination of remote probes (e.g., TCP/IP, SMB, HTTP, NTP, SNMP, etc.), it is possible to guess the name of the remote operating system in use. It is also possible sometimes to guess the version of the operating system.",n/a,,"
+Remote operating system : Linux Kernel 2.6
+Confidence level : 65
+Method : SinFP
+
+ 
+The remote host is running Linux Kernel 2.6"
+19506,,,None,10.10.1.20,tcp,0,Nessus Scan Information,This plugin displays information about the Nessus scan.,"This plugin displays, for each tested host, information about the scan itself :
+
+  - The version of the plugin set.
+  - The type of scanner (Nessus or Nessus Home).
+  - The version of the Nessus Engine.
+  - The port scanner(s) used.
+  - The port range scanned.
+  - Whether credentialed or third-party patch management     checks are possible.
+  - The date of the scan.
+  - The duration of the scan.
+  - The number of hosts scanned in parallel.
+  - The number of checks done in parallel.",n/a,,"Information about this scan : 
+
+Nessus version : 8.9.0
+Plugin feed version : 202002250330
+Scanner edition used : Nessus
+Scan type : Normal
+Scan policy used : Vikatan
+Scanner IP : 10.10.2.226
+Port scanner(s) : nessus_syn_scanner 
+Port range : default
+Thorough tests : no
+Experimental tests : no
+Paranoia level : 1
+Report verbosity : 1
+Safe checks : yes
+Optimize the test : yes
+Credentialed checks : no
+Patch management checks : None
+CGI scanning : enabled
+Web application tests : disabled
+Max hosts : 5
+Max checks : 10
+Recv timeout : 5
+Backports : None
+Allow post-scan editing: Yes
+Scan Start Date : 2020/2/26 14:43 India Standard Time
+Scan duration : 487 sec
+"
+22964,,,None,10.10.1.20,tcp,80,Service Detection,The remote service could be identified.,Nessus was able to identify the remote service by its banner or by looking at the error message it sends when it receives an HTTP request.,n/a,,A web server is running on this port.
+24260,,,None,10.10.1.20,tcp,80,HyperText Transfer Protocol (HTTP) Information,Some information about the remote HTTP configuration can be extracted.,"This test gives some information about the remote HTTP protocol - the version used, whether HTTP Keep-Alive and HTTP pipelining are enabled, etc... 
+
+This test is informational only and does not denote any security problem.",n/a,,"
+Response Code : HTTP/1.1 200 OK
+
+Protocol version : HTTP/1.1
+SSL : no
+Keep-Alive : no
+Options allowed : (Not implemented)
+Headers :
+
+  X-Powered-By: Express
+  Accept-Ranges: bytes
+  Cache-Control: public, max-age=0
+  Last-Modified: Tue, 08 Jan 2019 08:52:28 GMT
+  ETag: W/""3ce-1682ca9bce0""
+  Content-Type: text/html; charset=UTF-8
+  Content-Length: 974
+  Vary: Accept-Encoding
+  Date: Wed, 26 Feb 2020 09:18:52 GMT
+  Connection: keep-alive
+  
+Response Body :
+
+<!--
+Copyright 2017 Bitnami.
+
+Licensed under the Apache License, Version 2.0 (the ""License"");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an ""AS IS"" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+--><!doctype html><html lang=""en""><head><title>Kubeless UI</title><meta charset=""utf-8""><meta name=""viewport"" content=""width=device-width,initial-scale=1""><link rel=""shortcut icon"" href=""favicon.ico""></head><body><div id=""root"" style=""height: 100%""></div><script type=""text/javascript"" src=""vendor.a6e108d0a18c526061d0.js""></script><script type=""text/javascript"" src=""app.294599f7820c129c3094.js""></script></body></html>"
+25220,,,None,10.10.1.20,tcp,0,TCP/IP Timestamps Supported,The remote service implements TCP timestamps.,"The remote host implements TCP timestamps, as defined by RFC1323.  A side effect of this feature is that the uptime of the remote host can sometimes be computed.",n/a,http://www.ietf.org/rfc/rfc1323.txt,
+45590,CVE-2013-2566,,None,10.10.1.20,tcp,0,Common Platform Enumeration (CPE),It was possible to enumerate CPE names that matched on the remote system.,"By using information obtained from a Nessus scan, this plugin reports CPE (Common Platform Enumeration) matches for various hardware and software products found on a host. 
+
+Note that if an official CPE is not available for the product, this plugin computes the best possible CPE based on the information available from the scan.",n/a,"http://cpe.mitre.org/
+https://nvd.nist.gov/products/cpe","
+The remote operating system matched the following CPE : 
+
+  cpe:/o:linux:linux_kernel:2.6
+"
+50344,CVE-2015-2808,,None,10.10.1.20,tcp,80,Missing or Permissive Content-Security-Policy frame-ancestors HTTP Response Header,The remote web server does not take steps to mitigate a class of web application vulnerabilities.,"The remote web server in some responses sets a permissive Content-Security-Policy (CSP) frame-ancestors response header or does not set one at all.
+
+The CSP frame-ancestors header has been proposed by the W3C Web Application Security Working Group as a way to mitigate cross-site scripting and clickjacking attacks.",Set a non-permissive Content-Security-Policy frame-ancestors header for all requested resources.,"http://www.nessus.org/u?55aa8f57
+http://www.nessus.org/u?07cc2a06
+https://content-security-policy.com/
+https://www.w3.org/TR/CSP2/","
+The following pages do not set a Content-Security-Policy frame-ancestors response header or set a permissive policy:
+
+  - http://10.10.1.20/
+"
+50345,CVE-2019-15107,,None,10.10.1.20,tcp,80,Missing or Permissive X-Frame-Options HTTP Response Header,The remote web server does not take steps to mitigate a class of web application vulnerabilities.,"The remote web server in some responses sets a permissive X-Frame-Options response header or does not set one at all.
+
+The X-Frame-Options header has been proposed by Microsoft as a way to mitigate clickjacking attacks and is currently supported by all major browser vendors",Set a properly configured X-Frame-Options header for all requested resources.,"https://en.wikipedia.org/wiki/Clickjacking
+http://www.nessus.org/u?399b1f56","
+The following pages do not set a X-Frame-Options response header or set a permissive policy:
+
+  - http://10.10.1.20/
+"

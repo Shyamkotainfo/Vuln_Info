@@ -158,6 +158,57 @@ python3 copy_local_to_atlas.py --scope gold
 
 ---
 
+---
+
+## 🚀 Deployment & API
+
+The project includes a **FastAPI** backend for triggering analytics via HTTP and is Docker-ready for AWS App Runner.
+
+### 1. Web API
+Start the server locally:
+```bash
+uvicorn api.main:app --reload
+```
+
+**Endopint**: `POST /ingest`
+- **File**: Upload a `silver_*.csv` file.
+- **Form Data (Optional)**: `mongo_uri` (Connect to a specific client DB).
+
+### 2. Docker
+Build and run locally:
+```bash
+docker build -t vuln-backend .
+docker run -p 8080:8080 --env-file .env vuln-backend
+```
+
+### 3. AWS App Runner (CI/CD)
+The `.github/workflows/deploy.yml` pipeline automatically deploys to App Runner.
+- **Requires**: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` in GitHub Secrets.
+- **Target**: Deploys to `vuln-info-backend` service.
+
+---
+
+## 🏗 Infrastructure as Code (Terraform)
+
+Instead of relying on the pipeline to create resources, you can provision them cleanly using Terraform.
+
+### 1. Initialize
+```bash
+cd terraform
+terraform init
+```
+
+### 2. Provision
+Creates ECR Repo, IAM Roles, and App Runner Service.
+```bash
+terraform apply
+```
+
+### 3. Connect to Pipeline
+After provisioning, the GitHub Workflow will detect the existing `vuln-info-backend` service and simply update it with new code.
+
+---
+
 ## 🔌 Extensibility Assessment
 
 **Can this code be extended? YES.**

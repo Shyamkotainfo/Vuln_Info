@@ -1,0 +1,103 @@
+name: Deploy Backend to App Runner
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - staging
+    paths:
+      - 'api/**'
+      - 'analytics_stream/**'
+      - 'vulnerability_pipeline/**'
+      - 'Dockerfile'
+      - 'requirements.txt'
+
+env:
+  AWS_REGION: us-east-1
+  SERVICE_NAME: vuln-info-backend
+  ECR_REPO: vuln-info/backend
+  # Role ARN from user reference (Please Verify)
+  ROLE_ARN: arn:aws:iam::339713066436:role/service-role/AppRunnerECRAccessRole
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set environment-specific variables
+        id: set-env
+        run: |
+          echo "IMAGE_TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Get AWS account ID
+        id: aws-account
+        run: |
+          echo "ACCOUNT_ID=$(aws sts get-caller-identity --query 'Account' --output text)" >> $GITHUB_ENV
+
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+
+      - name: Ensure ECR repo exists
+        run: |
+          aws ecr describe-repositories --repository-names ${{ env.ECR_REPO }} || \
+          aws ecr create-repository --repository-name ${{ env.ECR_REPO }}
+
+      - name: Build and push Docker image
+        run: |
+          IMAGE_URI=${{ env.ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPO }}:${{ env.IMAGE_TAG }}
+          echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+          
+          docker build -t $IMAGE_URI .
+          docker push $IMAGE_URI
+
+      - name: Deploy to App Runner
+        run: |
+          # check if service exists
+          SERVICE_ARN=$(aws apprunner list-services --query "ServiceSummaryList[?ServiceName=='${{ env.SERVICE_NAME }}'].ServiceArn | [0]" --output text)
+          
+          if [[ "$SERVICE_ARN" == "None" ]]; then
+            echo "Creating new App Runner service..."
+            aws apprunner create-service \
+              --service-name ${{ env.SERVICE_NAME }} \
+              --source-configuration '{
+                "ImageRepository": {
+                    "ImageIdentifier": "'"$IMAGE_URI"'",
+                    "ImageRepositoryType": "ECR",
+                    "ImageConfiguration": {
+                        "Port": "8080"
+                    }
+                },
+                "AutoDeploymentsEnabled": true,
+                "AuthenticationConfiguration": {
+                    "AccessRoleArn": "'"${{ env.ROLE_ARN }}"'"
+                }
+              }'
+          else
+            echo "Updating existing App Runner service..."
+            aws apprunner update-service \
+              --service-arn $SERVICE_ARN \
+              --source-configuration '{
+                "ImageRepository": {
+                    "ImageIdentifier": "'"$IMAGE_URI"'",
+                    "ImageRepositoryType": "ECR",
+                    "ImageConfiguration": {
+                        "Port": "8080"
+                    }
+                },
+                "AutoDeploymentsEnabled": true,
+                "AuthenticationConfiguration": {
+                    "AccessRoleArn": "'"${{ env.ROLE_ARN }}"'"
+                }
+              }'
+          fi
