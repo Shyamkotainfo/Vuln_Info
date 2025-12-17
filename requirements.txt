@@ -1,4 +1,12 @@
-pymongo
-requests
-pandas
-python-dotenv
+pymongo[srv]>=4.6.0
+certifi>=2024.2.2
+
+requests>=2.31.0
+pandas>=2.1.0
+python-dotenv>=1.0.1
+beautifulsoup4>=4.12.2
+fastapi>=0.109.0
+uvicorn>=0.27.0
+python-multipart>=0.0.9
+pytest>=7.4.0
+httpx>=0.26.0
