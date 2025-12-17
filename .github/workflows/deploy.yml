@@ -75,7 +75,10 @@ jobs:
                     "ImageIdentifier": "'"$IMAGE_URI"'",
                     "ImageRepositoryType": "ECR",
                     "ImageConfiguration": {
-                        "Port": "8080"
+                        "Port": "8080",
+                        "RuntimeEnvironmentVariables": {
+                            "MONGO_URI": "'"${{ secrets.MONGO_URI }}"'"
+                        }
                     }
                 },
                 "AutoDeploymentsEnabled": true,
@@ -92,7 +95,10 @@ jobs:
                     "ImageIdentifier": "'"$IMAGE_URI"'",
                     "ImageRepositoryType": "ECR",
                     "ImageConfiguration": {
-                        "Port": "8080"
+                        "Port": "8080",
+                        "RuntimeEnvironmentVariables": {
+                            "MONGO_URI": "'"${{ secrets.MONGO_URI }}"'"
+                        }
                     }
                 },
                 "AutoDeploymentsEnabled": true,
