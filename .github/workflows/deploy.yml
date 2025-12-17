@@ -17,8 +17,8 @@ env:
   AWS_REGION: us-east-1
   SERVICE_NAME: vuln-info-backend
   ECR_REPO: vuln-info/backend
-  # Role ARN from user reference (Please Verify)
-  ROLE_ARN: arn:aws:iam::339713066436:role/service-role/AppRunnerECRAccessRole
+  # Role ARN managed by Terraform (AppRunnerECRAccessRole_TF)
+  ROLE_ARN: arn:aws:iam::339713066436:role/AppRunnerECRAccessRole_TF
 
 jobs:
   deploy:

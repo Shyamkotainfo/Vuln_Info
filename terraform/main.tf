@@ -44,6 +44,9 @@ resource "aws_apprunner_service" "backend_service" {
     image_repository {
       image_configuration {
         port = "8080"
+        runtime_environment_variables = {
+          MONGO_URI = var.mongo_uri
+        }
       }
       image_identifier      = "${aws_ecr_repository.backend_repo.repository_url}:latest"
       image_repository_type = "ECR"

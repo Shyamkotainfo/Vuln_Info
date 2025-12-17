@@ -12,3 +12,9 @@ variable "ecr_repo_name" {
   description = "Name of the ECR Repository"
   default     = "vuln-info/backend"
 }
+
+variable "mongo_uri" {
+  description = "MongoDB Connection URI"
+  type        = string
+  sensitive   = true
+}
