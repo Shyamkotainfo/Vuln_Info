@@ -95,14 +95,24 @@ class CSVProcessor:
         # 3. Fetch Risk Intel from fct_final (System Database)
         intel_map = {}
         if unique_cves:
-            cursor = self.intel_db["fct_final"].find(
+            # Diagnostics: Check if collection exists and has data
+            coll_name = "fct_final"
+            coll = self.intel_db[coll_name]
+            count = coll.count_documents({})
+            logger.info(f"🔍 Intel Stats: Collection '{coll_name}' exists in '{self.intel_db.name}' with {count} docs.")
+            
+            if count == 0:
+                logger.warning(f"⚠️  Vulnerability Enrichment Gap: The collection '{coll_name}' is EMPTY in your database '{self.intel_db.name}'. Did you run 'calculate_facts.py'?")
+
+            cursor = coll.find(
                 {"cve_id": {"$in": list(unique_cves)}},
                 {"_id": 0}
             )
             for doc in cursor:
                 intel_map[doc["cve_id"]] = doc
-
-        logger.info(f"Risk Intel found for {len(intel_map)}/{len(unique_cves)} CVEs")
+        
+        match_count = len(intel_map)
+        logger.info(f"Risk Intel found for {match_count}/{len(unique_cves)} CVEs")
 
         # ---------------------------------------------------------------
         # 4. Enrichment Logic
