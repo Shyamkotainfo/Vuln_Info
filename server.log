@@ -37,3 +37,8 @@ INFO:CSVProcessor:🚀 CLEAN DATA LOADED TO MONGODB (collection: 'vrr_risk_repor
 ================================================================================
 
 INFO:     127.0.0.1:56744 - "POST /upload/csv HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29518]
+INFO:     Stopping reloader process [29511]
