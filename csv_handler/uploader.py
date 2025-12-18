@@ -270,7 +270,14 @@ class CSVProcessor:
 
             ops = []
             for record in records:
-                clean = {k: v for k, v in record.items() if pd.notna(v)}
+                # Clean up null values safely (handles lists/dicts from enrichment)
+                clean = {}
+                for k, v in record.items():
+                    if isinstance(v, (list, dict)):
+                        clean[k] = v
+                    elif pd.notna(v):
+                        clean[k] = v
+                
                 clean["last_updated"] = datetime.datetime.utcnow()
 
                 ops.append(
