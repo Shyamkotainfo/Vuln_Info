@@ -15,7 +15,7 @@ app = FastAPI()
 
 # Removed broken legacy endpoint (analytics_stream.client_processor missing)
 
-from csv_ingest.csv_processor import CSVProcessor
+from csv_handler.uploader import CSVProcessor
 
 from typing import Optional
 
@@ -36,14 +36,11 @@ def process_host_findings_background(file_path: str, mongo_uri: Optional[str] = 
 
 @app.post("/upload/csv")
 async def upload_host_findings(
-    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     mongo_uri: Optional[str] = Form(None)
 ):
     """
-    Ingest Host Findings CSV to 'host_findings' collection.
-    Optional: Provide 'mongo_uri' to target a specific database.
-    Default: Uses system configuration (Local/Atlas).
+    Ingest Host Findings CSV and return the enriched JSON results.
     """
     if not file.filename.endswith('.csv'):
         raise HTTPException(status_code=400, detail="Only CSV files are supported")
@@ -52,14 +49,17 @@ async def upload_host_findings(
         with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp:
             shutil.copyfileobj(file.file, tmp)
             tmp_path = tmp.name
-    except Exception as e:
-        logger.error(f"File upload failed: {e}")
-        raise HTTPException(status_code=500, detail="Failed to save uploaded file")
+            
+        logger.info(f"Processing upload for {file.filename}")
+        processor = CSVProcessor(mongo_uri=mongo_uri)
+        result = processor.process_csv(tmp_path)
         
-    background_tasks.add_task(process_host_findings_background, tmp_path, mongo_uri)
-    
-    return {
-        "message": "CSV received. Processing in background.", 
-        "filename": file.filename,
-        "target_db": "Custom URI" if mongo_uri else "System Default"
-    }
+        # Clean up temp file
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+            
+        return result
+
+    except Exception as e:
+        logger.error(f"Upload and processing failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

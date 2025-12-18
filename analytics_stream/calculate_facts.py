@@ -1,3 +1,5 @@
+#Vuln_info/analytics_stream/calculate_facts.py
+
 import logging
 import os
 import sys
@@ -41,24 +43,15 @@ def get_db():
         return client["vulnerability_gold"]
 
 class FactCalculator:
-    def __init__(self, db):
-        self.db = db
-        # Cache source collections 
-        self.sources = {
-            alias: self.db[col_name] 
-            for alias, col_name in COLLECTION_MAP.items()
-        }
+    def __init__(self, cache: dict):
+        self.cache = cache
 
-    def fetch_cve_data(self, cve_id: str) -> dict:
-        data = {}
-        for alias, col in self.sources.items():
-            query = {"cve_id": cve_id}
-            if alias == "CISA": query = {"cveID": cve_id}
-            elif alias == "EPSS": query = {"cve": cve_id}
-            
-            doc = col.find_one(query) or {}
-            data[alias] = doc
-        return data
+    def get_cve_data(self, cve_id: str) -> dict:
+        """Fetch from memory cache instead of DB"""
+        return {
+            alias: self.cache.get(alias, {}).get(cve_id, {})
+            for alias in COLLECTION_MAP.keys()
+        }
 
     def calculate_score(self, cve_data: dict) -> float:
         score = 0.0
@@ -80,73 +73,141 @@ class FactCalculator:
             source_doc = cve_data.get(rule["source"], {})
             key = f"{rule['category']}_{rule['name']}"
             try:
+                # Definitions use transform(doc, field)
                 val = rule["transform"](source_doc, rule["field"])
                 if val: threats[key] = val
             except Exception:
                 continue
         return threats
 
-def process_batch(cve_ids, db):
-    """Worker function (Thread Safe)"""
-    calculator = FactCalculator(db)
-    col_final = db.fct_final
+def load_all_metadata(db) -> dict:
+    """Pre-load auxiliary collections into memory for O(1) lookup"""
+    cache = {}
+    
+    # CISA
+    logger.info("Caching CISA data...")
+    cache["CISA"] = {doc["cve_id"]: doc for doc in db.gold_cisa.find() if "cve_id" in doc}
+    
+    # EPSS
+    logger.info("Caching EPSS data (300k+ records)...")
+    epss_cache = {}
+    count = 0
+    for doc in db.gold_epss.find():
+        if "cve" in doc:
+            epss_cache[doc["cve"]] = doc
+            count += 1
+            if count % 50000 == 0:
+                logger.info(f"  Downloaded {count} EPSS records...")
+    cache["EPSS"] = epss_cache
+    
+    # ExploitDB (codes is a list)
+    logger.info("Caching ExploitDB data...")
+    xdb = {}
+    count = 0
+    for doc in db.gold_exploit.find({"codes": {"$exists": True}}):
+        for cve in doc.get("codes", []):
+            xdb[cve] = doc
+        count += 1
+        if count % 10000 == 0:
+            logger.info(f"  Cached {count} ExploitDB records...")
+    cache["ExploitDB"] = xdb
+    
+    # Metasploit (references is a list)
+    logger.info("Caching Metasploit data...")
+    msf = {}
+    for doc in db.gold_metasploit.find({"references": {"$exists": True}}):
+        for ref in doc.get("references", []):
+            if ref.startswith("CVE-"):
+                msf[ref] = doc
+    cache["Metasploit"] = msf
+    
+    logger.info("Warm-up Complete. Memory cache ready.")
+    return cache
+
+def process_batch(nvd_batch, cache, db):
+    """Worker function (Thread Safe since it uses shared cache read-only)"""
+    calculator = FactCalculator(cache)
     ops = []
     
-    for cve in cve_ids:
-        cve_data = calculator.fetch_cve_data(cve)
+    for nvd_doc in nvd_batch:
+        cve_id = nvd_doc.get("cve_id")
+        if not cve_id: continue
+        
+        # Merge NVD doc into the cve_data mapping
+        cve_data = calculator.get_cve_data(cve_id)
+        cve_data["NVD"] = nvd_doc
+        
         vrr = calculator.calculate_score(cve_data)
         threat_vals = calculator.extract_threats(cve_data)
         
         record = {
-            "cve_id": cve,
+            "cve_id": cve_id,
             "vrr_score": vrr,
-            "threat_values": threat_vals,
+            "threats": threat_vals,
             "date_added": datetime.utcnow()
         }
         ops.append(record)
     
     if ops:
-        col_final.insert_many(ops)
-        
+        db.fct_final.insert_many(ops)
     return len(ops)
 
-def run_parallel():
-    # 1. Setup Shared DB 
+def run_optimized():
     db = get_db()
-    primary_source = db["gold_nvd"]
-    
-    logger.info("Fetching CVE list...")
-    cve_ids = primary_source.distinct("cve_id")
-    total_cves = len(cve_ids)
-    logger.info(f"Targeting {total_cves} CVEs.")
+    if db is None:
+        logger.error("Could not connect to database.")
+        return
+
+    # 1. Warm up cache
+    start_time = datetime.now()
+    cache = load_all_metadata(db)
     
     # 2. Reset Target
     db.fct_final.drop()
+    db.fct_final.create_index("cve_id", unique=True)
     
-    # 3. Batching
-    BATCH_SIZE = 1000 # Can handle larger batches with threads
-    batches = [cve_ids[i:i + BATCH_SIZE] for i in range(0, total_cves, BATCH_SIZE)]
-    logger.info(f"Split into {len(batches)} batches.")
-    
-    # 4. Thread Execution
-    workers = 10 # Threading can support higher concurrency than cores for I/O
-    logger.info(f"Starting {workers} threads...")
-    
+    # 3. Stream NVD and process in batches
+    logger.info("Streaming NVD records...")
     total_processed = 0
-    with ThreadPoolExecutor(max_workers=workers) as executor:
-        # Submit task with shared DB object (MongoClient is thread safe)
-        futures = [executor.submit(process_batch, batch, db) for batch in batches]
+    batch = []
+    BATCH_SIZE = 5000
+    
+    # Estimate total for progress
+    total_to_do = db.gold_nvd.count_documents({})
+    
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        futures = []
         
-        for future in as_completed(futures):
-            try:
-                count = future.result()
-                total_processed += count
-                if total_processed % 5000 == 0:
-                    logger.info(f"Progress: {total_processed}/{total_cves}")
-            except Exception as e:
-                logger.error(f"Batch failed: {e}")
+        # Use a cursor to avoid loading all 322k NVD docs at once
+        cursor = db.gold_nvd.find({})
+        
+        for doc in cursor:
+            batch.append(doc)
+            if len(batch) >= BATCH_SIZE:
+                futures.append(executor.submit(process_batch, batch, cache, db))
+                batch = []
                 
-    logger.info("Parallel Fact Calculation Complete.")
+                # Housekeeping on futures to avoid memory bloat
+                if len(futures) > 20:
+                    for f in as_completed(futures):
+                        total_processed += f.result()
+                        futures.remove(f)
+                        if total_processed % 10000 == 0:
+                            logger.info(f"Progress: {total_processed}/{total_to_do}")
+                        break
+
+        # Final batch
+        if batch:
+            futures.append(executor.submit(process_batch, batch, cache, db))
+
+        # Wait for remaining
+        for f in as_completed(futures):
+            total_processed += f.result()
+            if total_processed % 10000 == 0:
+                logger.info(f"Progress: {total_processed}/{total_to_do}")
+
+    duration = datetime.now() - start_time
+    logger.info(f"Optimization Complete! Processed {total_processed} CVEs in {duration.total_seconds():.2f}s")
 
 if __name__ == "__main__":
-    run_parallel()
+    run_optimized()

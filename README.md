@@ -35,26 +35,33 @@ The final analytical layer. Contains **5 Collections**:
 
 ---
 
+### 4. Analytics Layer (Actionable Intelligence)
+The final processing stage located in `analytics_stream/`. It transforms Gold records into a **Star Schema** for fast analysis.
+
+*   **Logic-as-Code:** Definitions in `definitions.py` specify scoring weights and field transforms.
+*   **Star Schema:** 
+    *   `dim_threats`: Reference table for all metadata fields (CISA product, EPSS value, etc).
+    *   `dim_vrr`: Reference table for scoring factors and their weights.
+    *   `fct_final`: The "Master Fact Table" containing calculated scores for **322,000+ CVEs**.
+*   **Performance:** Uses an in-memory caching engine to process the entire dataset in **< 10 seconds**.
+
+---
+
 ## 📂 Project Structure
 
 ```text
-Vuln_Info/
-├── vulnerability_pipeline/
-│   ├── core/                    # Core framework (Config, DB Connection, Base Classes)
-│   ├── bronze/                  # Bronze Layer Plugins
-│   │   ├── nvd/                 # NVD Source (extract.py, load.py, __init__.py)
-│   │   ├── cisa/                # CISA Source
-│   │   ├── exploit/             # ExploitDB Source (Scraper logic here)
-│   │   └── ...
-│   ├── silver/                  # Silver Layer Plugins
-│   │   ├── nvd/                 # NVD Transformation (etl.py)
-│   │   └── ...
-│   ├── gold/                    # Gold Layer
-│   │   ├── mirrors/             # Source mirrors (nvd, cisa, etc.)
-│   │   └── mapping_config.py    # Column filters & factor definitions
-│   └── pipeline_orchestrator.py # Main entry point (Dynamic Discovery System)
-├── requirements.txt             # Dependencies
-└── pipeline.log                 # Execution logs
+├── vulnerability_pipeline/      # ETL Core (Bronze, Silver, Gold)
+├── analytics_stream/            # Analytics Layer (Layer 4)
+│   ├── definitions.py           # Scoring weights & Logic definitions
+│   ├── init_schema.py           # Validator & Dimension Builder
+│   └── calculate_facts.py       # High-speed scoring engine
+├── api/                         # FastAPI Deployment
+├── terraform/                   # AWS Infrastructure (IaC)
+├── csv_handler/                 # Smart CSV Ingestion & Enrichment
+│   ├── uploader.py              # Main "Smart" Ingestion Engine
+│   └── enricher.py              # Standalone CSV Enrichment Tool
+├── data/                        # Sample input files
+└── requirements.txt             # Dependencies
 ```
 
 ---
@@ -62,8 +69,8 @@ Vuln_Info/
 ## 🚀 Getting Started
 
 ### Prerequisites
-*   Python 3.8+
-*   MongoDB (Local `localhost:27017` or Atlas)
+*   Python 3.11+
+*   MongoDB (Atlas recommended for analytics performance)
 
 ### Installation
 
@@ -75,47 +82,58 @@ Vuln_Info/
     ```bash
     pip install -r requirements.txt
     ```
-3.  **Configure Environment (Optional):**
-    Create `.env` if using a custom MongoDB URI or NVD API Key (Recommended for speed).
+3.  **Configure Environment:**
+    Ensure your `.env` file has the correct MongoDB URI.
     ```ini
-    MONGO_URI=mongodb://localhost:27017/
-    NVD_API_KEY=your_api_key_here
+    MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/vulnerability_gold
     ```
 
 ---
 
 ## 🏃 Usage Examples
 
-The `pipeline_orchestrator` is your main tool. It automatically handles incremental loading.
-
-### 1. Run Everything (Standard Daily Job)
-Runs all Bronze extractors, then Silver transformers, then Gold aggregators.
+### 1. Run the ETL Pipeline (Bronze to Gold)
+This fetches raw data and mirrors it into the Gold tables.
 ```bash
 python3 -m vulnerability_pipeline.pipeline_orchestrator
 ```
 
-### 2. Run Specific Sources
-Useful if you only want to update NVD.
+### 2. Initialize Analytics (Dimensions)
+Validates that your Gold data matches the code definitions and builds dimensions.
 ```bash
-python3 -m vulnerability_pipeline.pipeline_orchestrator --sources nvd
-```
-*Run multiple:*
-```bash
-python3 -m vulnerability_pipeline.pipeline_orchestrator --sources cisa metasploit
+python3 analytics_stream/init_schema.py
 ```
 
-### 3. Run Specific Layers
-If you just want to re-process Silver without re-fetching data (e.g., after changing transformation logic).
+### 3. Calculate Risk Scores (Facts)
+Runs the optimized scoring engine. Processes ~322k records in seconds.
 ```bash
-python3 -m vulnerability_pipeline.pipeline_orchestrator --layer silver
+python3 analytics_stream/calculate_facts.py
 ```
-*Run only Bronze:*
-```bash
-python3 -m vulnerability_pipeline.pipeline_orchestrator --layer bronze
-```
-*Run only Gold:*
-```bash
-python3 -m vulnerability_pipeline.pipeline_orchestrator --layer gold
+
+---
+
+## 📊 VRR Scoring Logic (Example)
+The system uses a weighted formula to calculate the **Vulnerability Risk Rating (VRR)**:
+
+| Factor | Weight | Logic |
+|--------|---------|-------|
+| **CISA KEV** | +30.0 | If CVE is in CISA Known Exploited list. |
+| **ExploitDB** | +10.0 | If a public exploit exists. |
+| **Metasploit** | +10.0 | If a Metasploit module is available. |
+| **EPSS** | Value * 10 | Probability score (0.0 - 10.0 range). |
+| **NVD CVSS** | Score * 0.5 | Half of the base severity score. |
+
+**Resulting Fact Record:**
+```json
+{
+  "cve_id": "CVE-2023-23397",
+  "vrr_score": 44.26,
+  "threats": {
+    "CISA_vendor": "Microsoft",
+    "EPSS_value": 0.936,
+    "NVD_severity": "Critical"
+  }
+}
 ```
 
 ### 4. Full Reload (Resetting a Source)
@@ -129,6 +147,48 @@ python3 -m vulnerability_pipeline.pipeline_orchestrator --sources exploit --laye
 ```
 
 ---
+
+---
+
+---
+
+## 🎯 Smart CSV Ingestion & Enrichment
+
+The system now includes an intelligent CSV handler that automatically transforms raw scanner exports (like Nessus) and enriches them with risk intelligence in real-time.
+
+### 1. Features
+*   **Automatic Transformation:** Detects raw Nessus CSVs and maps them to a consistent schema.
+*   **Real-time Enrichment:** Fetches `vrr_score`, `threats`, and `weaknesses` (CWEs) from the Gold analytics layer.
+*   **Junk Removal:** Automatically filters out "Info" findings with no vulnerability risk.
+*   **Clean Reporting:** Generates a prioritized `final_risk_report.json` and `.csv` for every upload.
+*   **Audit Trail:** Stores enriched findings in a dedicated MongoDB collection: `vrr_risk_report`.
+
+### 2. How to Run
+
+The easiest way to use the system is through the `./local_run.sh` tool:
+
+**A. Start the API Server:**
+```bash
+./local_run.sh api
+```
+
+**B. Test a CSV Upload:**
+Loads a Nessus CSV, enriches it, and saves the reports.
+```bash
+./local_run.sh test-upload ./data/Nessus.csv
+```
+
+**C. Standalone CSV Enrichment:**
+Enrich a CSV without uploading to the main database.
+```bash
+./local_run.sh enrich ./data/Nessus.csv
+```
+
+**D. Full System Refresh (Scoring):**
+Recalculate all 322k+ risk scores to ensure your CSVs get the latest intel.
+```bash
+./local_run.sh analytics
+```
 
 ---
 
