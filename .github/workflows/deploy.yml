@@ -76,7 +76,7 @@ jobs:
                     "ImageConfiguration": {
                         "Port": "8080",
                         "RuntimeEnvironmentVariables": {
-                            "MONGO_URI": "'"${{ secrets.MONGO_URI }}"'"
+                            "MONGO_URI": "${{ secrets.MONGO_URI }}"
                         }
                     }
                 },
@@ -96,7 +96,7 @@ jobs:
                     "ImageConfiguration": {
                         "Port": "8080",
                         "RuntimeEnvironmentVariables": {
-                            "MONGO_URI": "'"${{ secrets.MONGO_URI }}"'"
+                            "MONGO_URI": "${{ secrets.MONGO_URI }}"
                         }
                     }
                 },
