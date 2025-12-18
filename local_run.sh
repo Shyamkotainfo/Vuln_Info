@@ -18,11 +18,10 @@ show_help() {
     echo ""
     echo "Options:"
     echo "  api        Start the FastAPI web server (Uvicorn)"
+    echo "  process [file] [uri]  Directly process a CSV (No API needed)"
     echo "  etl        Run the full ETL pipeline (Bronze -> Gold)"
     echo "  analytics  Run Analytics (Init Schema + Calculate Facts)"
-    echo "  enrich [in] [out]  Enrich a CSV with Risk Intel (joins with fct_final)"
     echo "  all        Run ETL followed by Analytics"
-    echo "  test-upload  [file] [mongo_uri] - Test CSV upload via API"
     echo "  help       Show this help message"
 }
 
@@ -31,34 +30,15 @@ case "$1" in
         echo -e "${GREEN}Starting FastAPI Server on http://localhost:8080...${NC}"
         uvicorn api.main:app --host 0.0.0.0 --port 8080 --reload
         ;;
-    test-upload)
+    process)
         FILE=$2
         URI=$3
         if [ -z "$FILE" ]; then
-            echo "Error: Please provide a file path. Example: ./local_run.sh test-upload ./data/Nessus.csv"
+            echo "Usage: ./local_run.sh process [csv_file] [optional_mongo_uri]"
             exit 1
         fi
-        echo -e "${GREEN}Testing Upload for $FILE...${NC}"
-        
-        # Call API and capture response
-        RESPONSE=$(curl -s -X POST "http://localhost:8080/upload/csv" \
-             -H "Content-Type: multipart/form-data" \
-             -F "file=@$FILE" \
-             -F "mongo_uri=$URI")
-        
-        # Use Python to pretty print the summary and result
-        echo "$RESPONSE" | python3 -c "
-import sys, json
-try:
-    data = json.load(sys.stdin)
-    if 'metadata' in data and 'summary' in data['metadata']:
-        print(data['metadata']['summary'])
-    else:
-        print(json.dumps(data, indent=4))
-except Exception as e:
-    print('Error parsing response:', e)
-    print(sys.stdin.read())
-"
+        echo -e "${GREEN}Processing CSV: $FILE ...${NC}"
+        python3 -m csv_handler.uploader "$FILE" "$URI"
         ;;
     etl)
         echo -e "${GREEN}Running ETL Pipeline (Bronze to Gold)...${NC}"
@@ -69,16 +49,6 @@ except Exception as e:
         python3 analytics_stream/init_schema.py
         echo -e "${GREEN}Calculating Risk Scores (Facts)...${NC}"
         python3 analytics_stream/calculate_facts.py
-        ;;
-    enrich)
-        IN=$2
-        OUT=$3
-        if [ -z "$IN" ]; then
-            echo "Usage: ./local_run.sh enrich [input_csv] [output_csv]"
-            exit 1
-        fi
-        echo -e "${GREEN}Enriching CSV with Risk Intelligence...${NC}"
-        python3 analytics_stream/run_enrichment.py "$IN" --output "$OUT"
         ;;
     all)
         echo -e "${GREEN}Running Full Project Suite...${NC}"
