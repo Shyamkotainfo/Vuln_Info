@@ -1,3 +1,4 @@
+# Vuln_info/analytics_stream/definitions.py
 from typing import Any, Dict, List, Optional, Callable
 
 # =============================================================================
@@ -14,10 +15,17 @@ def xf_lowercase_in(doc: Dict, key: str, valid_list: List[str]) -> bool:
     val = str(doc.get(key, "")).lower()
     return val in [v.lower() for v in valid_list]
 
-def xf_deep_get_cvss(doc: Dict, key: str = "metrics") -> float:
+def xf_deep_get_cvss(doc: Dict, key: str = "metrics_cvssMetricV31") -> float:
     try:
-        # Custom logic for NVD nested structure
-        return float(doc.get("metrics", {}).get("cvssMetricV31", [{}])[0].get("cvssData", {}).get("baseScore", 0.0))
+        # Gold schema is often flattened: metrics_cvssMetricV31 is the list
+        data = doc.get(key)
+        if not data:
+             # Fallback to nested just in case
+             data = doc.get("metrics", {}).get("cvssMetricV31")
+             
+        if isinstance(data, list) and len(data) > 0:
+            return float(data[0].get("cvssData", {}).get("baseScore", 0.0))
+        return 0.0
     except:
         return 0.0
 
@@ -69,17 +77,19 @@ COLLECTION_MAP = {
 # Structure: (Category, Name, Source Collection Key, Source Field, Transform Func)
 THREAT_DEFINITIONS = [
     # CISA
-    {"category": "CISA", "name": "required_action", "source": "CISA", "field": "requiredAction", "transform": xf_identity},
-    {"category": "CISA", "name": "known_ransomware_campaign_use", "source": "CISA", "field": "knownRansomwareCampaignUse", "transform": xf_identity},
+    {"category": "CISA", "name": "required_action", "source": "CISA", "field": "required_action", "transform": xf_identity},
+    {"category": "CISA", "name": "known_ransomware_campaign_use", "source": "CISA", "field": "known_ransomware_campaign_use", "transform": xf_identity},
     {"category": "CISA", "name": "product", "source": "CISA", "field": "product", "transform": xf_identity},
-    {"category": "CISA", "name": "vendor_project", "source": "CISA", "field": "vendorProject", "transform": xf_identity},
+    {"category": "CISA", "name": "vendor_project", "source": "CISA", "field": "vendor_project", "transform": xf_identity},
+    {"category": "CISA", "name": "cwe", "source": "CISA", "field": "cwes", "transform": xf_identity},
+
     
     # EPSS
     {"category": "EPSS", "name": "epss_value", "source": "EPSS", "field": "epss", "transform": xf_identity},
     {"category": "EPSS", "name": "percentile", "source": "EPSS", "field": "percentile", "transform": xf_identity},
     
     # ExploitDB
-    {"category": "ExploitDB", "name": "exploit_id", "source": "ExploitDB", "field": "exploit_id", "transform": xf_identity},
+    {"category": "ExploitDB", "name": "exploit_id", "source": "ExploitDB", "field": "source_url", "transform": xf_identity},
     {"category": "ExploitDB", "name": "type", "source": "ExploitDB", "field": "type", "transform": xf_identity},
     {"category": "ExploitDB", "name": "platform", "source": "ExploitDB", "field": "platform", "transform": xf_identity},
     
@@ -100,39 +110,38 @@ THREAT_DEFINITIONS = [
 # Structure: (Category, Name, Weight, Source, Logic Func returning Boolean/Float)
 VRR_DEFINITIONS = [
     {
-        "category": "CISA", "name": "CISA_KEV", 
+        "category": "CISA", "name": "CISA_KEY", 
         "weight": 30.0, 
         "source": "CISA",
-        "logic": lambda doc: xf_bool_exists(doc)  # If record exists in CISA
-    },
-    {
-        "category": "CISA", "name": "CISA_KNOWN_RANSOMWARE_USE", 
-        "weight": 20.0, 
-        "source": "CISA",
-        "logic": lambda doc: xf_lowercase_in(doc, "knownRansomwareCampaignUse", ["Known", "Yes"])
+        "field": "cve_id", # Factor is defined by record existence
+        "logic": lambda doc: xf_bool_exists(doc)
     },
     {
         "category": "EPSS", "name": "EPSS", 
-        "weight": 10.0, # Multiplier
+        "weight": 10.0, 
         "source": "EPSS",
-        "logic": lambda doc: float(doc.get("epss", 0) or 0) # Value * Weight
+        "field": "epss",
+        "logic": lambda doc: float(doc.get("epss", 0) or 0)
     },
     {
         "category": "ExploitDB", "name": "EXPLOIT_DB", 
         "weight": 10.0, 
         "source": "ExploitDB",
+        "field": "source_url",
         "logic": lambda doc: xf_bool_exists(doc)
     },
     {
         "category": "Metasploit", "name": "METASPLOIT", 
         "weight": 10.0, 
         "source": "Metasploit",
+        "field": "references",
         "logic": lambda doc: xf_bool_exists(doc)
     },
     {
         "category": "NVD", "name": "NVD_CVSS_3", 
-        "weight": 0.5, # Multiplier (Score / 2)
+        "weight": 0.5, 
         "source": "NVD",
+        "field": ["metrics_cvssMetricV31", "metrics_cvssMetricV40", "metrics_cvssMetricV2"],
         "logic": lambda doc: xf_deep_get_cvss(doc)
     }
 ]

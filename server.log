@@ -1,0 +1,39 @@
+[0;34m=== Vulnerability Pipeline Local Runner ===[0m
+[0;32mStarting FastAPI Server on http://localhost:8080...[0m
+INFO:     Will watch for changes in these directories: ['/Users/Shyam/Documents/Vuln_Mongo/Vuln_Info']
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     Started reloader process [29511] using StatReload
+INFO:     Started server process [29518]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:API:Processing upload for Nessus.csv
+INFO:CSVProcessor:💾 Target: Default System MongoDB
+INFO:CSVProcessor:Detected raw Nessus CSV
+INFO:CSVProcessor:Transforming Nessus CSV
+INFO:CSVProcessor:Found 12 unique CVEs in CSV
+INFO:CSVProcessor:Risk Intel found for 12/12 CVEs
+INFO:CSVProcessor:✨ Junk Removed: 0 rows.
+INFO:CSVProcessor:📄 Clean Risk Report (CSV): /Users/Shyam/Documents/Vuln_Mongo/Vuln_Info/data/final_risk_report.csv
+INFO:CSVProcessor:📄 Clean Risk Report (JSON): /Users/Shyam/Documents/Vuln_Mongo/Vuln_Info/data/final_risk_report.json
+INFO:CSVProcessor:🚀 CLEAN DATA LOADED TO MONGODB (collection: 'vrr_risk_report') | Count: 18
+⚠️ Localhost detected: Disabling TLS for MongoDB connection.
+✅ Connected to MongoDB Atlas successfully.
+
+================================================================================
+🛡️  ENRICHED VULNERABILITY REPORT SUMMARY
+================================================================================
+ ScannerPluginID  vrr_score vulnerabilities   IPAddress
+           95631       0.97 [CVE-2004-2761]  10.10.1.21
+           10114       0.06 [CVE-1999-0524] 10.10.1.230
+           10882       0.13 [CVE-2001-0361] 10.10.1.230
+           10882       2.45 [CVE-2001-0572] 10.10.1.230
+           10882       0.47 [CVE-2001-1473] 10.10.1.230
+           35291       0.97 [CVE-2004-2761] 10.10.1.230
+           42873       7.75 [CVE-2016-2183] 10.10.1.230
+           70658      10.39 [CVE-2008-5161] 10.10.1.230
+           78479      21.10 [CVE-2014-3566] 10.10.1.230
+           10114       0.06 [CVE-1999-0524]  10.10.2.10
+... and 8 more rows.
+================================================================================
+
+INFO:     127.0.0.1:56744 - "POST /upload/csv HTTP/1.1" 200 OK
