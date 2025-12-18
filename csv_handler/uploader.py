@@ -203,8 +203,8 @@ class CSVProcessor:
         # ---------------------------------------------------------------
         total_rows = len(out)
         
-        # Filter for actionable risk (VRR > 0)
-        out_clean = out[out["vrr_score"] > 0].copy()
+        # Keeping all rows per user request
+        out_clean = out.copy()
         
         # Move Risk Intel to the FRONT of the CSV for easier reading
         cols = out_clean.columns.tolist()
@@ -235,7 +235,6 @@ class CSVProcessor:
         full_summary = summary_header + summary_body + "\n" + "="*80 + "\n"
         print(full_summary)
 
-        logger.info(f"✨ Junk Removed: {total_rows - len(out_clean)} rows.")
         logger.info(f"📄 Clean Risk Report (CSV): {csv_path}")
         logger.info(f"📄 Clean Risk Report (JSON): {json_path}")
 
@@ -244,7 +243,7 @@ class CSVProcessor:
             "summary": full_summary,
             "csv_path": csv_path,
             "json_path": json_path,
-            "junk_removed": total_rows - len(out_clean)
+            "total_rows": total_rows
         }
 
         return out_clean
@@ -311,3 +310,19 @@ class CSVProcessor:
         except Exception as e:
             logger.error(f"CSV processing failed: {e}")
             raise
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) < 2:
+        print("Usage: python3 -m csv_handler.uploader <csv_file> [mongo_uri]")
+        sys.exit(1)
+    
+    file_path = sys.argv[1]
+    custom_uri = sys.argv[2] if len(sys.argv) > 2 else None
+    
+    processor = CSVProcessor(mongo_uri=custom_uri)
+    try:
+        processor.process_csv(file_path)
+    except Exception as e:
+        print(f"Error: {e}")
+        sys.exit(1)
