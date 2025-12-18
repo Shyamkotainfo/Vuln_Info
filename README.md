@@ -60,7 +60,11 @@ The final processing stage located in `analytics_stream/`. It transforms Gold re
 ├── csv_handler/                 # Smart CSV Ingestion & Enrichment
 │   ├── uploader.py              # Main "Smart" Ingestion Engine
 │   └── enricher.py              # Standalone CSV Enrichment Tool
+├── scripts/                     # Operational Scripts
+│   └── migration/               # Data sync tools (Local -> Atlas)
+├── logs/                        # Centralized Log Storage
 ├── data/                        # Sample input files
+├── local_run.sh                 # Unified Control Script (Runner)
 └── requirements.txt             # Dependencies
 ```
 
@@ -159,7 +163,7 @@ The system now includes an intelligent CSV handler that automatically transforms
 ### 1. Features
 *   **Automatic Transformation:** Detects raw Nessus CSVs and maps them to a consistent schema.
 *   **Real-time Enrichment:** Fetches `vrr_score`, `threats`, and `weaknesses` (CWEs) from the Gold analytics layer.
-*   **Junk Removal:** Automatically filters out "Info" findings with no vulnerability risk.
+*   **Full Data Retention:** Enriches every row in the file (no filtering), even if the risk score is 0.
 *   **Clean Reporting:** Generates a prioritized `final_risk_report.json` and `.csv` for every upload.
 *   **Audit Trail:** Stores enriched findings in a dedicated MongoDB collection: `vrr_risk_report`.
 
@@ -172,48 +176,40 @@ The easiest way to use the system is through the `./local_run.sh` tool:
 ./local_run.sh api
 ```
 
-**B. Test a CSV Upload:**
-Loads a Nessus CSV, enriches it, and saves the reports.
+**B. Directly Process a CSV (Standalone):**
+Process, enrich, and save reports locally without starting the API.
 ```bash
-./local_run.sh test-upload ./data/Nessus.csv
+./local_run.sh process ./data/Nessus.csv
 ```
 
-**C. Standalone CSV Enrichment:**
-Enrich a CSV without uploading to the main database.
+**C. Sync Risk Intelligence to Atlas:**
+Migrate your local 322k+ risk scores to the cloud for deployment enrichment.
 ```bash
-./local_run.sh enrich ./data/Nessus.csv
+./local_run.sh sync
 ```
 
 **D. Full System Refresh (Scoring):**
-Recalculate all 322k+ risk scores to ensure your CSVs get the latest intel.
+Recalculate all 322k+ risk scores across all sources.
 ```bash
-./local_run.sh analytics
+./local_run.sh all
 ```
 
 ---
 
-## ☁️ Migrating to Atlas
+A built-in tool is provided to migrate your local Risk Intelligence records to Atlas. 
 
-A built-in tool is provided to migrate your Local data to MongoDB Atlas.
-
-### 1. Setup
-Ensure your `.env` file has both URIs:
-```ini
-LOCAL_MONGO_URI=mongodb://localhost:27017/
-MONGO_URI=mongodb+srv://user:pass@cluster.mongodb.net/
+**Run Migration via Runner:**
+```bash
+./local_run.sh sync
 ```
 
-### 2. Run Migration
-Use the `copy_local_to_atlas.py` script.
-
-**Copy All Data:**
+**Manual Execution (Advanced):**
 ```bash
-python3 copy_local_to_atlas.py --scope all
-```
+# Sync specific risk tables only (Recommended for Free Tier)
+python3 scripts/migration/targeted_atlas_sync.py
 
-**Copy Only Gold Layer:**
-```bash
-python3 copy_local_to_atlas.py --scope gold
+# Full DB Migration
+python3 scripts/migration/copy_local_to_atlas.py --scope all
 ```
 
 ---

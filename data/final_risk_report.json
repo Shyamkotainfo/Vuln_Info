@@ -1,17 +1,27 @@
 [
     {
-        "vrr_score":0.97,
-        "vulnerabilities":[
+        "Host Findings ID":"c1929ee2d3955bd7fd1eb3fcb4a480e3",
+        "VRR Score":0.97,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":95631,
+        "Vulnerability name":"SSL Certificate Signed Using Weak Hashing Algorithm (Known CA)",
+        "Scanner Reported Severity":null,
+        "Scanner Severity":null,
+        "Description":"The remote service uses a known CA certificate in the SSL certificate chain that has been signed using a cryptographically weak hashing algorithm (e.g., MD2, MD4, MD5, or SHA1). These signature algorithms are known to be vulnerable to collision attacks. An attacker can exploit this to generate another certificate with the same digital signature, allowing the attacker to masquerade as the affected service.\n\nNote that this plugin reports all SSL certificate chains signed with SHA-1 that expire after January 1, 2017 as vulnerable. This is in accordance with Google's gradual sunsetting of the SHA-1 cryptographic hash algorithm. A known CA SSL certificate in the certificate chain has been signed using a weak hashing algorithm.",
+        "Status":"Open",
+        "Port":443,
+        "Protocol":"tcp",
+        "Plugin Output":"",
+        "Possible Solutions":"Contact the Certificate Authority to have the certificate reissued.",
+        "Possible patches":"https:\/\/tools.ietf.org\/html\/rfc3279\nhttps:\/\/docs.microsoft.com\/en-us\/security-updates\/SecurityAdvisories\/2008\/961509",
+        "IPAddress":"10.10.1.21",
+        "Vulnerabilities":[
             "CVE-2004-2761"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-310"
         ],
-        "IPAddress":"10.10.1.21",
-        "VulnerabilityName":"SSL Certificate Signed Using Weak Hashing Algorithm (Known CA)",
-        "ScannerReportedSeverity":null,
-        "HostFindingsID":"c1929ee2d3955bd7fd1eb3fcb4a480e3",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.09733,
             "EPSS_percentile":0.92662,
             "NVD_weaknesses":"CWE-310",
@@ -44,30 +54,31 @@
                 "https:\/\/www.redhat.com\/archives\/fedora-package-announce\/2009-February\/msg00096.html"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":95631,
-        "ScannerSeverity":null,
-        "Description":"The remote service uses a known CA certificate in the SSL certificate chain that has been signed using a cryptographically weak hashing algorithm (e.g., MD2, MD4, MD5, or SHA1). These signature algorithms are known to be vulnerable to collision attacks. An attacker can exploit this to generate another certificate with the same digital signature, allowing the attacker to masquerade as the affected service.\n\nNote that this plugin reports all SSL certificate chains signed with SHA-1 that expire after January 1, 2017 as vulnerable. This is in accordance with Google's gradual sunsetting of the SHA-1 cryptographic hash algorithm. A known CA SSL certificate in the certificate chain has been signed using a weak hashing algorithm.",
-        "Status":"Open",
-        "Port":443,
-        "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Contact the Certificate Authority to have the certificate reissued.",
-        "PossiblePatches":"https:\/\/tools.ietf.org\/html\/rfc3279\nhttps:\/\/docs.microsoft.com\/en-us\/security-updates\/SecurityAdvisories\/2008\/961509"
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":0.06,
-        "vulnerabilities":[
+        "Host Findings ID":"7a0c5fc2a975a4241a303b2e09d321c9",
+        "VRR Score":0.06,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":10114,
+        "Vulnerability name":"ICMP Timestamp Request Remote Date Disclosure",
+        "Scanner Reported Severity":null,
+        "Scanner Severity":0.0,
+        "Description":"The remote host answers to an ICMP timestamp request.  This allows an attacker to know the date that is set on the targeted machine, which may assist an unauthenticated, remote attacker in defeating time-based authentication protocols.\n\nTimestamps returned from machines running Windows Vista \/ 7 \/ 2008 \/ 2008 R2 are deliberately incorrect, but usually within 1000 seconds of the actual system time. It is possible to determine the exact time set on the remote host.",
+        "Status":"Open",
+        "Port":0,
+        "Protocol":"icmp",
+        "Plugin Output":"",
+        "Possible Solutions":"Filter out the ICMP timestamp requests (13), and the outgoing ICMP timestamp replies (14).",
+        "Possible patches":null,
+        "IPAddress":"10.10.1.230",
+        "Vulnerabilities":[
             "CVE-1999-0524"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-200"
         ],
-        "IPAddress":"10.10.1.230",
-        "VulnerabilityName":"ICMP Timestamp Request Remote Date Disclosure",
-        "ScannerReportedSeverity":null,
-        "HostFindingsID":"7a0c5fc2a975a4241a303b2e09d321c9",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.00588,
             "EPSS_percentile":0.6838,
             "NVD_weaknesses":"CWE-200",
@@ -83,30 +94,31 @@
                 "https:\/\/support.f5.com\/csp\/article\/K15277"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":10114,
-        "ScannerSeverity":0.0,
-        "Description":"The remote host answers to an ICMP timestamp request.  This allows an attacker to know the date that is set on the targeted machine, which may assist an unauthenticated, remote attacker in defeating time-based authentication protocols.\n\nTimestamps returned from machines running Windows Vista \/ 7 \/ 2008 \/ 2008 R2 are deliberately incorrect, but usually within 1000 seconds of the actual system time. It is possible to determine the exact time set on the remote host.",
-        "Status":"Open",
-        "Port":0,
-        "Protocol":"icmp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Filter out the ICMP timestamp requests (13), and the outgoing ICMP timestamp replies (14).",
-        "PossiblePatches":null
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":0.13,
-        "vulnerabilities":[
+        "Host Findings ID":"17928fc8987f64488b6c8c09cb212c7a",
+        "VRR Score":0.13,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":10882,
+        "Vulnerability name":"SSH Protocol Version 1 Session Key Retrieval",
+        "Scanner Reported Severity":"High",
+        "Scanner Severity":7.5,
+        "Description":"The remote SSH daemon supports connections made using the version 1.33 and\/or 1.5 of the SSH protocol. \n\nThese protocols are not completely cryptographically safe so they should not be used. The remote service offers an insecure cryptographic protocol.",
+        "Status":"Open",
+        "Port":22,
+        "Protocol":"tcp",
+        "Plugin Output":"",
+        "Possible Solutions":"Disable compatibility with version 1 of the protocol.",
+        "Possible patches":null,
+        "IPAddress":"10.10.1.230",
+        "Vulnerabilities":[
             "CVE-2001-0361"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-310"
         ],
-        "IPAddress":"10.10.1.230",
-        "VulnerabilityName":"SSH Protocol Version 1 Session Key Retrieval",
-        "ScannerReportedSeverity":"High",
-        "HostFindingsID":"17928fc8987f64488b6c8c09cb212c7a",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.01308,
             "EPSS_percentile":0.79271,
             "NVD_weaknesses":"CWE-310",
@@ -123,30 +135,31 @@
                 "https:\/\/exchange.xforce.ibmcloud.com\/vulnerabilities\/6082"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":10882,
-        "ScannerSeverity":7.5,
+        "Date":"2025-12-18"
+    },
+    {
+        "Host Findings ID":"17928fc8987f64488b6c8c09cb212c7a",
+        "VRR Score":2.45,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":10882,
+        "Vulnerability name":"SSH Protocol Version 1 Session Key Retrieval",
+        "Scanner Reported Severity":"High",
+        "Scanner Severity":7.5,
         "Description":"The remote SSH daemon supports connections made using the version 1.33 and\/or 1.5 of the SSH protocol. \n\nThese protocols are not completely cryptographically safe so they should not be used. The remote service offers an insecure cryptographic protocol.",
         "Status":"Open",
         "Port":22,
         "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Disable compatibility with version 1 of the protocol.",
-        "PossiblePatches":null
-    },
-    {
-        "vrr_score":2.45,
-        "vulnerabilities":[
+        "Plugin Output":"",
+        "Possible Solutions":"Disable compatibility with version 1 of the protocol.",
+        "Possible patches":null,
+        "IPAddress":"10.10.1.230",
+        "Vulnerabilities":[
             "CVE-2001-0572"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "NVD-CWE-Other"
         ],
-        "IPAddress":"10.10.1.230",
-        "VulnerabilityName":"SSH Protocol Version 1 Session Key Retrieval",
-        "ScannerReportedSeverity":"High",
-        "HostFindingsID":"17928fc8987f64488b6c8c09cb212c7a",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.24511,
             "EPSS_percentile":0.95917,
             "NVD_weaknesses":"NVD-CWE-Other",
@@ -158,30 +171,31 @@
                 "http:\/\/www.redhat.com\/support\/errata\/RHSA-2001-033.html"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":10882,
-        "ScannerSeverity":7.5,
+        "Date":"2025-12-18"
+    },
+    {
+        "Host Findings ID":"17928fc8987f64488b6c8c09cb212c7a",
+        "VRR Score":0.47,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":10882,
+        "Vulnerability name":"SSH Protocol Version 1 Session Key Retrieval",
+        "Scanner Reported Severity":"High",
+        "Scanner Severity":7.5,
         "Description":"The remote SSH daemon supports connections made using the version 1.33 and\/or 1.5 of the SSH protocol. \n\nThese protocols are not completely cryptographically safe so they should not be used. The remote service offers an insecure cryptographic protocol.",
         "Status":"Open",
         "Port":22,
         "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Disable compatibility with version 1 of the protocol.",
-        "PossiblePatches":null
-    },
-    {
-        "vrr_score":0.47,
-        "vulnerabilities":[
+        "Plugin Output":"",
+        "Possible Solutions":"Disable compatibility with version 1 of the protocol.",
+        "Possible patches":null,
+        "IPAddress":"10.10.1.230",
+        "Vulnerabilities":[
             "CVE-2001-1473"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-310"
         ],
-        "IPAddress":"10.10.1.230",
-        "VulnerabilityName":"SSH Protocol Version 1 Session Key Retrieval",
-        "ScannerReportedSeverity":"High",
-        "HostFindingsID":"17928fc8987f64488b6c8c09cb212c7a",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.04731,
             "EPSS_percentile":0.89015,
             "NVD_weaknesses":"CWE-310",
@@ -190,30 +204,31 @@
                 "https:\/\/exchange.xforce.ibmcloud.com\/vulnerabilities\/6603"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":10882,
-        "ScannerSeverity":7.5,
-        "Description":"The remote SSH daemon supports connections made using the version 1.33 and\/or 1.5 of the SSH protocol. \n\nThese protocols are not completely cryptographically safe so they should not be used. The remote service offers an insecure cryptographic protocol.",
-        "Status":"Open",
-        "Port":22,
-        "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Disable compatibility with version 1 of the protocol.",
-        "PossiblePatches":null
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":0.97,
-        "vulnerabilities":[
+        "Host Findings ID":"0da00874adc8d200ecb3de2fa5d04450",
+        "VRR Score":0.97,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":35291,
+        "Vulnerability name":"SSL Certificate Signed Using Weak Hashing Algorithm",
+        "Scanner Reported Severity":"Medium",
+        "Scanner Severity":5.0,
+        "Description":"The remote service uses an SSL certificate chain that has been signed using a cryptographically weak hashing algorithm (e.g. MD2, MD4, MD5, or SHA1). These signature algorithms are known to be vulnerable to collision attacks. An attacker can exploit this to generate another certificate with the same digital signature, allowing an attacker to masquerade as the affected service.\n\nNote that this plugin reports all SSL certificate chains signed with SHA-1 that expire after January 1, 2017 as vulnerable. This is in accordance with Google's gradual sunsetting of the SHA-1 cryptographic hash algorithm.\n\nNote that certificates in the chain that are contained in the Nessus CA database (known_CA.inc) have been ignored. An SSL certificate in the certificate chain has been signed using a weak hash algorithm.",
+        "Status":"Open",
+        "Port":443,
+        "Protocol":"tcp",
+        "Plugin Output":"",
+        "Possible Solutions":"Contact the Certificate Authority to have the certificate reissued.",
+        "Possible patches":"https:\/\/tools.ietf.org\/html\/rfc3279\nhttp:\/\/www.nessus.org\/u?9bb87bf2\nhttp:\/\/www.nessus.org\/u?e120eea1\nhttp:\/\/www.nessus.org\/u?5d894816\nhttp:\/\/www.nessus.org\/u?51db68aa\nhttp:\/\/www.nessus.org\/u?9dc7bfba",
+        "IPAddress":"10.10.1.230",
+        "Vulnerabilities":[
             "CVE-2004-2761"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-310"
         ],
-        "IPAddress":"10.10.1.230",
-        "VulnerabilityName":"SSL Certificate Signed Using Weak Hashing Algorithm",
-        "ScannerReportedSeverity":"Medium",
-        "HostFindingsID":"0da00874adc8d200ecb3de2fa5d04450",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.09733,
             "EPSS_percentile":0.92662,
             "NVD_weaknesses":"CWE-310",
@@ -246,30 +261,31 @@
                 "https:\/\/www.redhat.com\/archives\/fedora-package-announce\/2009-February\/msg00096.html"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":35291,
-        "ScannerSeverity":5.0,
-        "Description":"The remote service uses an SSL certificate chain that has been signed using a cryptographically weak hashing algorithm (e.g. MD2, MD4, MD5, or SHA1). These signature algorithms are known to be vulnerable to collision attacks. An attacker can exploit this to generate another certificate with the same digital signature, allowing an attacker to masquerade as the affected service.\n\nNote that this plugin reports all SSL certificate chains signed with SHA-1 that expire after January 1, 2017 as vulnerable. This is in accordance with Google's gradual sunsetting of the SHA-1 cryptographic hash algorithm.\n\nNote that certificates in the chain that are contained in the Nessus CA database (known_CA.inc) have been ignored. An SSL certificate in the certificate chain has been signed using a weak hash algorithm.",
+        "Date":"2025-12-18"
+    },
+    {
+        "Host Findings ID":"e3e1fe434f3a8b8b4d73aa55a16b26e5",
+        "VRR Score":7.75,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":42873,
+        "Vulnerability name":"SSL Medium Strength Cipher Suites Supported (SWEET32)",
+        "Scanner Reported Severity":"Medium",
+        "Scanner Severity":5.0,
+        "Description":"The remote host supports the use of SSL ciphers that offer medium strength encryption. Nessus regards medium strength as any encryption that uses key lengths at least 64 bits and less than 112 bits, or else that uses the 3DES encryption suite.\n\nNote that it is considerably easier to circumvent medium strength encryption if the attacker is on the same physical network. The remote service supports the use of medium strength SSL ciphers.",
         "Status":"Open",
         "Port":443,
         "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Contact the Certificate Authority to have the certificate reissued.",
-        "PossiblePatches":"https:\/\/tools.ietf.org\/html\/rfc3279\nhttp:\/\/www.nessus.org\/u?9bb87bf2\nhttp:\/\/www.nessus.org\/u?e120eea1\nhttp:\/\/www.nessus.org\/u?5d894816\nhttp:\/\/www.nessus.org\/u?51db68aa\nhttp:\/\/www.nessus.org\/u?9dc7bfba"
-    },
-    {
-        "vrr_score":7.75,
-        "vulnerabilities":[
+        "Plugin Output":"",
+        "Possible Solutions":"Reconfigure the affected application if possible to avoid use of medium strength ciphers.",
+        "Possible patches":"https:\/\/www.openssl.org\/blog\/blog\/2016\/08\/24\/sweet32\/\nhttps:\/\/sweet32.info",
+        "IPAddress":"10.10.1.230",
+        "Vulnerabilities":[
             "CVE-2016-2183"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-200"
         ],
-        "IPAddress":"10.10.1.230",
-        "VulnerabilityName":"SSL Medium Strength Cipher Suites Supported (SWEET32)",
-        "ScannerReportedSeverity":"Medium",
-        "HostFindingsID":"e3e1fe434f3a8b8b4d73aa55a16b26e5",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.40016,
             "EPSS_percentile":0.97171,
             "NVD_weaknesses":"CWE-200",
@@ -413,30 +429,31 @@
                 "https:\/\/www.vicarius.io\/vsociety\/posts\/cve-2016-2183-mitigate-sweet32-vulnerability"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":42873,
-        "ScannerSeverity":5.0,
-        "Description":"The remote host supports the use of SSL ciphers that offer medium strength encryption. Nessus regards medium strength as any encryption that uses key lengths at least 64 bits and less than 112 bits, or else that uses the 3DES encryption suite.\n\nNote that it is considerably easier to circumvent medium strength encryption if the attacker is on the same physical network. The remote service supports the use of medium strength SSL ciphers.",
-        "Status":"Open",
-        "Port":443,
-        "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Reconfigure the affected application if possible to avoid use of medium strength ciphers.",
-        "PossiblePatches":"https:\/\/www.openssl.org\/blog\/blog\/2016\/08\/24\/sweet32\/\nhttps:\/\/sweet32.info"
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":10.39,
-        "vulnerabilities":[
+        "Host Findings ID":"3ccb63a7a514c0b4602fff411ce7320f",
+        "VRR Score":10.39,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":70658,
+        "Vulnerability name":"SSH Server CBC Mode Ciphers Enabled",
+        "Scanner Reported Severity":"Low",
+        "Scanner Severity":2.6,
+        "Description":"The SSH server is configured to support Cipher Block Chaining (CBC) encryption.  This may allow an attacker to recover the plaintext message from the ciphertext. \n\nNote that this plugin only checks for the options of the SSH server and does not check for vulnerable software versions. The SSH server is configured to use Cipher Block Chaining.",
+        "Status":"Open",
+        "Port":22,
+        "Protocol":"tcp",
+        "Plugin Output":"",
+        "Possible Solutions":"Contact the vendor or consult product documentation to disable CBC mode cipher encryption, and enable CTR or GCM cipher mode encryption.",
+        "Possible patches":null,
+        "IPAddress":"10.10.1.230",
+        "Vulnerabilities":[
             "CVE-2008-5161"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-200"
         ],
-        "IPAddress":"10.10.1.230",
-        "VulnerabilityName":"SSH Server CBC Mode Ciphers Enabled",
-        "ScannerReportedSeverity":"Low",
-        "HostFindingsID":"3ccb63a7a514c0b4602fff411ce7320f",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.03853,
             "EPSS_percentile":0.87818,
             "NVD_weaknesses":"CWE-200",
@@ -485,30 +502,31 @@
             "Metasploit_module_name":"SSH Version Scanner",
             "Metasploit_type":"auxiliary"
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":70658,
-        "ScannerSeverity":2.6,
-        "Description":"The SSH server is configured to support Cipher Block Chaining (CBC) encryption.  This may allow an attacker to recover the plaintext message from the ciphertext. \n\nNote that this plugin only checks for the options of the SSH server and does not check for vulnerable software versions. The SSH server is configured to use Cipher Block Chaining.",
-        "Status":"Open",
-        "Port":22,
-        "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Contact the vendor or consult product documentation to disable CBC mode cipher encryption, and enable CTR or GCM cipher mode encryption.",
-        "PossiblePatches":null
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":21.1,
-        "vulnerabilities":[
+        "Host Findings ID":"484a59d34d3038f788e02a66513d6f09",
+        "VRR Score":21.1,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":78479,
+        "Vulnerability name":"SSLv3 Padding Oracle On Downgraded Legacy Encryption Vulnerability (POODLE)",
+        "Scanner Reported Severity":"Medium",
+        "Scanner Severity":4.3,
+        "Description":"The remote host is affected by a man-in-the-middle (MitM) information disclosure vulnerability known as POODLE. The vulnerability is due to the way SSL 3.0 handles padding bytes when decrypting messages encrypted using block ciphers in cipher block chaining (CBC) mode.\nMitM attackers can decrypt a selected byte of a cipher text in as few as 256 tries if they are able to force a victim application to repeatedly send the same data over newly created SSL 3.0 connections.\n\nAs long as a client and service both support SSLv3, a connection can be 'rolled back' to SSLv3, even if TLSv1 or newer is supported by the client and service.\n\nThe TLS Fallback SCSV mechanism prevents 'version rollback' attacks without impacting legacy clients; however, it can only protect connections when the client and service support the mechanism. Sites that cannot disable SSLv3 immediately should enable this mechanism.\n\nThis is a vulnerability in the SSLv3 specification, not in any particular SSL implementation. Disabling SSLv3 is the only way to completely mitigate the vulnerability. It is possible to obtain sensitive information from the remote host with SSL\/TLS-enabled services.",
+        "Status":"Open",
+        "Port":443,
+        "Protocol":"tcp",
+        "Plugin Output":"",
+        "Possible Solutions":"Disable SSLv3.\n\nServices that must support SSLv3 should enable the TLS Fallback SCSV mechanism until SSLv3 can be disabled.",
+        "Possible patches":"https:\/\/www.imperialviolet.org\/2014\/10\/14\/poodle.html\nhttps:\/\/www.openssl.org\/~bodo\/ssl-poodle.pdf\nhttps:\/\/tools.ietf.org\/html\/draft-ietf-tls-downgrade-scsv-00",
+        "IPAddress":"10.10.1.230",
+        "Vulnerabilities":[
             "CVE-2014-3566"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-310"
         ],
-        "IPAddress":"10.10.1.230",
-        "VulnerabilityName":"SSLv3 Padding Oracle On Downgraded Legacy Encryption Vulnerability (POODLE)",
-        "ScannerReportedSeverity":"Medium",
-        "HostFindingsID":"484a59d34d3038f788e02a66513d6f09",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.94015,
             "EPSS_percentile":0.99885,
             "NVD_weaknesses":"CWE-310",
@@ -761,30 +779,31 @@
             "Metasploit_module_name":"SSL\/TLS Version Detection",
             "Metasploit_type":"auxiliary"
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":78479,
-        "ScannerSeverity":4.3,
-        "Description":"The remote host is affected by a man-in-the-middle (MitM) information disclosure vulnerability known as POODLE. The vulnerability is due to the way SSL 3.0 handles padding bytes when decrypting messages encrypted using block ciphers in cipher block chaining (CBC) mode.\nMitM attackers can decrypt a selected byte of a cipher text in as few as 256 tries if they are able to force a victim application to repeatedly send the same data over newly created SSL 3.0 connections.\n\nAs long as a client and service both support SSLv3, a connection can be 'rolled back' to SSLv3, even if TLSv1 or newer is supported by the client and service.\n\nThe TLS Fallback SCSV mechanism prevents 'version rollback' attacks without impacting legacy clients; however, it can only protect connections when the client and service support the mechanism. Sites that cannot disable SSLv3 immediately should enable this mechanism.\n\nThis is a vulnerability in the SSLv3 specification, not in any particular SSL implementation. Disabling SSLv3 is the only way to completely mitigate the vulnerability. It is possible to obtain sensitive information from the remote host with SSL\/TLS-enabled services.",
-        "Status":"Open",
-        "Port":443,
-        "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Disable SSLv3.\n\nServices that must support SSLv3 should enable the TLS Fallback SCSV mechanism until SSLv3 can be disabled.",
-        "PossiblePatches":"https:\/\/www.imperialviolet.org\/2014\/10\/14\/poodle.html\nhttps:\/\/www.openssl.org\/~bodo\/ssl-poodle.pdf\nhttps:\/\/tools.ietf.org\/html\/draft-ietf-tls-downgrade-scsv-00"
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":0.06,
-        "vulnerabilities":[
+        "Host Findings ID":"8d64d2ead7090ee001fc9b38674a3dc2",
+        "VRR Score":0.06,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":10114,
+        "Vulnerability name":"ICMP Timestamp Request Remote Date Disclosure",
+        "Scanner Reported Severity":null,
+        "Scanner Severity":0.0,
+        "Description":"The remote host answers to an ICMP timestamp request.  This allows an attacker to know the date that is set on the targeted machine, which may assist an unauthenticated, remote attacker in defeating time-based authentication protocols.\n\nTimestamps returned from machines running Windows Vista \/ 7 \/ 2008 \/ 2008 R2 are deliberately incorrect, but usually within 1000 seconds of the actual system time. It is possible to determine the exact time set on the remote host.",
+        "Status":"Open",
+        "Port":0,
+        "Protocol":"icmp",
+        "Plugin Output":"",
+        "Possible Solutions":"Filter out the ICMP timestamp requests (13), and the outgoing ICMP timestamp replies (14).",
+        "Possible patches":null,
+        "IPAddress":"10.10.2.10",
+        "Vulnerabilities":[
             "CVE-1999-0524"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-200"
         ],
-        "IPAddress":"10.10.2.10",
-        "VulnerabilityName":"ICMP Timestamp Request Remote Date Disclosure",
-        "ScannerReportedSeverity":null,
-        "HostFindingsID":"8d64d2ead7090ee001fc9b38674a3dc2",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.00588,
             "EPSS_percentile":0.6838,
             "NVD_weaknesses":"CWE-200",
@@ -800,59 +819,61 @@
                 "https:\/\/support.f5.com\/csp\/article\/K15277"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":10114,
-        "ScannerSeverity":0.0,
-        "Description":"The remote host answers to an ICMP timestamp request.  This allows an attacker to know the date that is set on the targeted machine, which may assist an unauthenticated, remote attacker in defeating time-based authentication protocols.\n\nTimestamps returned from machines running Windows Vista \/ 7 \/ 2008 \/ 2008 R2 are deliberately incorrect, but usually within 1000 seconds of the actual system time. It is possible to determine the exact time set on the remote host.",
-        "Status":"Open",
-        "Port":0,
-        "Protocol":"icmp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Filter out the ICMP timestamp requests (13), and the outgoing ICMP timestamp replies (14).",
-        "PossiblePatches":null
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":0.09,
-        "vulnerabilities":[
+        "Host Findings ID":"1f767f500c28cbae7a8ea0101237ec51",
+        "VRR Score":0.09,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":10223,
+        "Vulnerability name":"RPC portmapper Service Detection",
+        "Scanner Reported Severity":null,
+        "Scanner Severity":0.0,
+        "Description":"The RPC portmapper is running on this port.\n\nThe portmapper allows someone to get the port number of each RPC service running on the remote host by sending either multiple lookup requests or a DUMP request. An ONC RPC portmapper is running on the remote host.",
+        "Status":"Open",
+        "Port":111,
+        "Protocol":"udp",
+        "Plugin Output":"",
+        "Possible Solutions":null,
+        "Possible patches":null,
+        "IPAddress":"10.10.2.10",
+        "Vulnerabilities":[
             "CVE-1999-0632"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "NVD-CWE-Other"
         ],
-        "IPAddress":"10.10.2.10",
-        "VulnerabilityName":"RPC portmapper Service Detection",
-        "ScannerReportedSeverity":null,
-        "HostFindingsID":"1f767f500c28cbae7a8ea0101237ec51",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.00918,
             "EPSS_percentile":0.75316,
             "NVD_weaknesses":"NVD-CWE-Other",
             "NVD_references":"https:\/\/www.cve.org\/CVERecord?id=CVE-1999-0632"
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":10223,
-        "ScannerSeverity":0.0,
-        "Description":"The RPC portmapper is running on this port.\n\nThe portmapper allows someone to get the port number of each RPC service running on the remote host by sending either multiple lookup requests or a DUMP request. An ONC RPC portmapper is running on the remote host.",
-        "Status":"Open",
-        "Port":111,
-        "Protocol":"udp",
-        "PluginOutput":"",
-        "PossibleSolutions":null,
-        "PossiblePatches":null
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":7.75,
-        "vulnerabilities":[
+        "Host Findings ID":"d281a72483d865cfddeb9bd3be37de81",
+        "VRR Score":7.75,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":42873,
+        "Vulnerability name":"SSL Medium Strength Cipher Suites Supported (SWEET32)",
+        "Scanner Reported Severity":"Medium",
+        "Scanner Severity":5.0,
+        "Description":"The remote host supports the use of SSL ciphers that offer medium strength encryption. Nessus regards medium strength as any encryption that uses key lengths at least 64 bits and less than 112 bits, or else that uses the 3DES encryption suite.\n\nNote that it is considerably easier to circumvent medium strength encryption if the attacker is on the same physical network. The remote service supports the use of medium strength SSL ciphers.",
+        "Status":"Open",
+        "Port":10000,
+        "Protocol":"tcp",
+        "Plugin Output":"",
+        "Possible Solutions":"Reconfigure the affected application if possible to avoid use of medium strength ciphers.",
+        "Possible patches":"https:\/\/www.openssl.org\/blog\/blog\/2016\/08\/24\/sweet32\/\nhttps:\/\/sweet32.info",
+        "IPAddress":"10.10.2.10",
+        "Vulnerabilities":[
             "CVE-2016-2183"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-200"
         ],
-        "IPAddress":"10.10.2.10",
-        "VulnerabilityName":"SSL Medium Strength Cipher Suites Supported (SWEET32)",
-        "ScannerReportedSeverity":"Medium",
-        "HostFindingsID":"d281a72483d865cfddeb9bd3be37de81",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.40016,
             "EPSS_percentile":0.97171,
             "NVD_weaknesses":"CWE-200",
@@ -996,30 +1017,31 @@
                 "https:\/\/www.vicarius.io\/vsociety\/posts\/cve-2016-2183-mitigate-sweet32-vulnerability"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":42873,
-        "ScannerSeverity":5.0,
-        "Description":"The remote host supports the use of SSL ciphers that offer medium strength encryption. Nessus regards medium strength as any encryption that uses key lengths at least 64 bits and less than 112 bits, or else that uses the 3DES encryption suite.\n\nNote that it is considerably easier to circumvent medium strength encryption if the attacker is on the same physical network. The remote service supports the use of medium strength SSL ciphers.",
+        "Date":"2025-12-18"
+    },
+    {
+        "Host Findings ID":"1c64447f177627a3465d40487aebac6d",
+        "VRR Score":19.03,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":65821,
+        "Vulnerability name":"SSL RC4 Cipher Suites Supported (Bar Mitzvah)",
+        "Scanner Reported Severity":"Low",
+        "Scanner Severity":2.6,
+        "Description":"The remote host supports the use of RC4 in one or more cipher suites.\nThe RC4 cipher is flawed in its generation of a pseudo-random stream of bytes so that a wide variety of small biases are introduced into the stream, decreasing its randomness.\n\nIf plaintext is repeatedly encrypted (e.g., HTTP cookies), and an attacker is able to obtain many (i.e., tens of millions) ciphertexts, the attacker may be able to derive the plaintext. The remote service supports the use of the RC4 cipher.",
         "Status":"Open",
         "Port":10000,
         "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Reconfigure the affected application if possible to avoid use of medium strength ciphers.",
-        "PossiblePatches":"https:\/\/www.openssl.org\/blog\/blog\/2016\/08\/24\/sweet32\/\nhttps:\/\/sweet32.info"
-    },
-    {
-        "vrr_score":19.03,
-        "vulnerabilities":[
+        "Plugin Output":"",
+        "Possible Solutions":"Reconfigure the affected application, if possible, to avoid use of RC4 ciphers. Consider using TLS 1.2 with AES-GCM suites subject to browser and web server support.",
+        "Possible patches":"http:\/\/www.nessus.org\/u?ac7327a0\nhttp:\/\/cr.yp.to\/talks\/2013.03.12\/slides.pdf\nhttp:\/\/www.isg.rhul.ac.uk\/tls\/\nhttps:\/\/www.imperva.com\/docs\/HII_Attacking_SSL_when_using_RC4.pdf",
+        "IPAddress":"10.10.2.10",
+        "Vulnerabilities":[
             "CVE-2013-2566"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-326"
         ],
-        "IPAddress":"10.10.2.10",
-        "VulnerabilityName":"SSL RC4 Cipher Suites Supported (Bar Mitzvah)",
-        "ScannerReportedSeverity":"Low",
-        "HostFindingsID":"1c64447f177627a3465d40487aebac6d",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.90324,
             "EPSS_percentile":0.99572,
             "NVD_weaknesses":"CWE-326",
@@ -1049,30 +1071,31 @@
             "Metasploit_module_name":"SSL\/TLS Version Detection",
             "Metasploit_type":"auxiliary"
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":65821,
-        "ScannerSeverity":2.6,
+        "Date":"2025-12-18"
+    },
+    {
+        "Host Findings ID":"1c64447f177627a3465d40487aebac6d",
+        "VRR Score":3.47,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":65821,
+        "Vulnerability name":"SSL RC4 Cipher Suites Supported (Bar Mitzvah)",
+        "Scanner Reported Severity":"Low",
+        "Scanner Severity":2.6,
         "Description":"The remote host supports the use of RC4 in one or more cipher suites.\nThe RC4 cipher is flawed in its generation of a pseudo-random stream of bytes so that a wide variety of small biases are introduced into the stream, decreasing its randomness.\n\nIf plaintext is repeatedly encrypted (e.g., HTTP cookies), and an attacker is able to obtain many (i.e., tens of millions) ciphertexts, the attacker may be able to derive the plaintext. The remote service supports the use of the RC4 cipher.",
         "Status":"Open",
         "Port":10000,
         "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Reconfigure the affected application, if possible, to avoid use of RC4 ciphers. Consider using TLS 1.2 with AES-GCM suites subject to browser and web server support.",
-        "PossiblePatches":"http:\/\/www.nessus.org\/u?ac7327a0\nhttp:\/\/cr.yp.to\/talks\/2013.03.12\/slides.pdf\nhttp:\/\/www.isg.rhul.ac.uk\/tls\/\nhttps:\/\/www.imperva.com\/docs\/HII_Attacking_SSL_when_using_RC4.pdf"
-    },
-    {
-        "vrr_score":3.47,
-        "vulnerabilities":[
+        "Plugin Output":"",
+        "Possible Solutions":"Reconfigure the affected application, if possible, to avoid use of RC4 ciphers. Consider using TLS 1.2 with AES-GCM suites subject to browser and web server support.",
+        "Possible patches":"http:\/\/www.nessus.org\/u?ac7327a0\nhttp:\/\/cr.yp.to\/talks\/2013.03.12\/slides.pdf\nhttp:\/\/www.isg.rhul.ac.uk\/tls\/\nhttps:\/\/www.imperva.com\/docs\/HII_Attacking_SSL_when_using_RC4.pdf",
+        "IPAddress":"10.10.2.10",
+        "Vulnerabilities":[
             "CVE-2015-2808"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-327"
         ],
-        "IPAddress":"10.10.2.10",
-        "VulnerabilityName":"SSL RC4 Cipher Suites Supported (Bar Mitzvah)",
-        "ScannerReportedSeverity":"Low",
-        "HostFindingsID":"1c64447f177627a3465d40487aebac6d",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.34742,
             "EPSS_percentile":0.9685,
             "NVD_weaknesses":"CWE-327",
@@ -1180,80 +1203,82 @@
                 "https:\/\/www.secpod.com\/blog\/cve-2015-2808-bar-mitzvah-attack-in-rc4-2\/"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":65821,
-        "ScannerSeverity":2.6,
-        "Description":"The remote host supports the use of RC4 in one or more cipher suites.\nThe RC4 cipher is flawed in its generation of a pseudo-random stream of bytes so that a wide variety of small biases are introduced into the stream, decreasing its randomness.\n\nIf plaintext is repeatedly encrypted (e.g., HTTP cookies), and an attacker is able to obtain many (i.e., tens of millions) ciphertexts, the attacker may be able to derive the plaintext. The remote service supports the use of the RC4 cipher.",
-        "Status":"Open",
-        "Port":10000,
-        "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Reconfigure the affected application, if possible, to avoid use of RC4 ciphers. Consider using TLS 1.2 with AES-GCM suites subject to browser and web server support.",
-        "PossiblePatches":"http:\/\/www.nessus.org\/u?ac7327a0\nhttp:\/\/cr.yp.to\/talks\/2013.03.12\/slides.pdf\nhttp:\/\/www.isg.rhul.ac.uk\/tls\/\nhttps:\/\/www.imperva.com\/docs\/HII_Attacking_SSL_when_using_RC4.pdf"
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":64.35,
-        "vulnerabilities":[
-            "CVE-2019-15107"
-        ],
-        "weaknesses":[
-            "CWE-78"
-        ],
-        "IPAddress":"10.10.2.10",
-        "VulnerabilityName":"Webmin 1.890 - 1.920 Remote Command Execution (CVE-2019-15107, CVE-2019-15231)",
-        "ScannerReportedSeverity":"Critical",
-        "HostFindingsID":"0d189b933976da7dfee11fb93f14d900",
-        "threats":{
-            "CISA_required_action":"Apply updates per vendor instructions.",
-            "CISA_known_ransomware_campaign_use":"Unknown",
-            "CISA_product":"Webmin",
-            "CISA_vendor_project":"Webmin",
-            "CISA_cwe":"CWE-78",
-            "EPSS_epss_value":0.94461,
-            "EPSS_percentile":0.99993,
-            "ExploitDB_exploit_id":"https:\/\/www.exploit-db.com\/exploits\/47230",
-            "ExploitDB_type":"remote",
-            "ExploitDB_platform":"linux",
-            "NVD_weaknesses":"CWE-78",
-            "NVD_references":[
-                "http:\/\/packetstormsecurity.com\/files\/154141\/Webmin-1.920-Remote-Command-Execution.html",
-                "http:\/\/packetstormsecurity.com\/files\/154141\/Webmin-Remote-Comman-Execution.html",
-                "http:\/\/packetstormsecurity.com\/files\/154197\/Webmin-1.920-password_change.cgi-Backdoor.html",
-                "http:\/\/packetstormsecurity.com\/files\/154485\/Webmin-1.920-Remote-Code-Execution.html",
-                "http:\/\/www.pentest.com.tr\/exploits\/DEFCON-Webmin-1920-Unauthenticated-Remote-Command-Execution.html",
-                "http:\/\/www.webmin.com\/security.html",
-                "https:\/\/attackerkb.com\/topics\/hxx3zmiCkR\/webmin-password-change-cgi-command-injection",
-                "https:\/\/www.cisa.gov\/known-exploited-vulnerabilities-catalog?field_cve=CVE-2019-15107",
-                "https:\/\/www.exploit-db.com\/exploits\/47230"
-            ],
-            "Metasploit_module_name":"Webmin password_change.cgi Backdoor",
-            "Metasploit_type":"exploit",
-            "Metasploit_platform":"Linux,Unix"
-        },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":127911,
-        "ScannerSeverity":10.0,
+        "Host Findings ID":"0d189b933976da7dfee11fb93f14d900",
+        "VRR Score":64.35,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":127911,
+        "Vulnerability name":"Webmin 1.890 - 1.920 Remote Command Execution (CVE-2019-15107, CVE-2019-15231)",
+        "Scanner Reported Severity":"Critical",
+        "Scanner Severity":10.0,
         "Description":"The Webmin install hosted on the remote host is affected by a remote command execution vulnerability. A remote, unauthenticated attacker and exploit this to execute arbitrary commands on the remote host. The remote web server is affected by a remote command execution vulnerability.",
         "Status":"Open",
         "Port":10000,
         "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Update to webmin 1.930 or later.",
-        "PossiblePatches":"http:\/\/www.webmin.com\/changes.html"
+        "Plugin Output":"",
+        "Possible Solutions":"Update to webmin 1.930 or later.",
+        "Possible patches":"http:\/\/www.webmin.com\/changes.html",
+        "IPAddress":"10.10.2.10",
+        "Vulnerabilities":[
+            "CVE-2019-15107"
+        ],
+        "Weaknesses":[
+            "CWE-78"
+        ],
+        "Threat":{
+            "CISA_required_action":"Apply updates per vendor instructions.",
+            "CISA_known_ransomware_campaign_use":"Unknown",
+            "CISA_product":"Webmin",
+            "CISA_vendor_project":"Webmin",
+            "CISA_cwe":"CWE-78",
+            "EPSS_epss_value":0.94461,
+            "EPSS_percentile":0.99993,
+            "ExploitDB_exploit_id":"https:\/\/www.exploit-db.com\/exploits\/47230",
+            "ExploitDB_type":"remote",
+            "ExploitDB_platform":"linux",
+            "NVD_weaknesses":"CWE-78",
+            "NVD_references":[
+                "http:\/\/packetstormsecurity.com\/files\/154141\/Webmin-1.920-Remote-Command-Execution.html",
+                "http:\/\/packetstormsecurity.com\/files\/154141\/Webmin-Remote-Comman-Execution.html",
+                "http:\/\/packetstormsecurity.com\/files\/154197\/Webmin-1.920-password_change.cgi-Backdoor.html",
+                "http:\/\/packetstormsecurity.com\/files\/154485\/Webmin-1.920-Remote-Code-Execution.html",
+                "http:\/\/www.pentest.com.tr\/exploits\/DEFCON-Webmin-1920-Unauthenticated-Remote-Command-Execution.html",
+                "http:\/\/www.webmin.com\/security.html",
+                "https:\/\/attackerkb.com\/topics\/hxx3zmiCkR\/webmin-password-change-cgi-command-injection",
+                "https:\/\/www.cisa.gov\/known-exploited-vulnerabilities-catalog?field_cve=CVE-2019-15107",
+                "https:\/\/www.exploit-db.com\/exploits\/47230"
+            ],
+            "Metasploit_module_name":"Webmin password_change.cgi Backdoor",
+            "Metasploit_type":"exploit",
+            "Metasploit_platform":"Linux,Unix"
+        },
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":19.03,
-        "vulnerabilities":[
+        "Host Findings ID":"2cc604ebebc21c1cdc9d76f66a62cbf7",
+        "VRR Score":19.03,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":45590,
+        "Vulnerability name":"Common Platform Enumeration (CPE)",
+        "Scanner Reported Severity":null,
+        "Scanner Severity":null,
+        "Description":"By using information obtained from a Nessus scan, this plugin reports CPE (Common Platform Enumeration) matches for various hardware and software products found on a host. \n\nNote that if an official CPE is not available for the product, this plugin computes the best possible CPE based on the information available from the scan. It was possible to enumerate CPE names that matched on the remote system.",
+        "Status":"Open",
+        "Port":0,
+        "Protocol":"tcp",
+        "Plugin Output":"",
+        "Possible Solutions":null,
+        "Possible patches":"http:\/\/cpe.mitre.org\/\nhttps:\/\/nvd.nist.gov\/products\/cpe",
+        "IPAddress":"10.10.1.20",
+        "Vulnerabilities":[
             "CVE-2013-2566"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-326"
         ],
-        "IPAddress":"10.10.1.20",
-        "VulnerabilityName":"Common Platform Enumeration (CPE)",
-        "ScannerReportedSeverity":null,
-        "HostFindingsID":"2cc604ebebc21c1cdc9d76f66a62cbf7",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.90324,
             "EPSS_percentile":0.99572,
             "NVD_weaknesses":"CWE-326",
@@ -1283,30 +1308,31 @@
             "Metasploit_module_name":"SSL\/TLS Version Detection",
             "Metasploit_type":"auxiliary"
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":45590,
-        "ScannerSeverity":null,
-        "Description":"By using information obtained from a Nessus scan, this plugin reports CPE (Common Platform Enumeration) matches for various hardware and software products found on a host. \n\nNote that if an official CPE is not available for the product, this plugin computes the best possible CPE based on the information available from the scan. It was possible to enumerate CPE names that matched on the remote system.",
-        "Status":"Open",
-        "Port":0,
-        "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":null,
-        "PossiblePatches":"http:\/\/cpe.mitre.org\/\nhttps:\/\/nvd.nist.gov\/products\/cpe"
+        "Date":"2025-12-18"
     },
     {
-        "vrr_score":3.47,
-        "vulnerabilities":[
+        "Host Findings ID":"74c0da684ef7d99dfd5f18b6d733e99f",
+        "VRR Score":3.47,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":50344,
+        "Vulnerability name":"Missing or Permissive Content-Security-Policy frame-ancestors HTTP Response Header",
+        "Scanner Reported Severity":null,
+        "Scanner Severity":null,
+        "Description":"The remote web server in some responses sets a permissive Content-Security-Policy (CSP) frame-ancestors response header or does not set one at all.\n\nThe CSP frame-ancestors header has been proposed by the W3C Web Application Security Working Group as a way to mitigate cross-site scripting and clickjacking attacks. The remote web server does not take steps to mitigate a class of web application vulnerabilities.",
+        "Status":"Open",
+        "Port":80,
+        "Protocol":"tcp",
+        "Plugin Output":"",
+        "Possible Solutions":"Set a non-permissive Content-Security-Policy frame-ancestors header for all requested resources.",
+        "Possible patches":"http:\/\/www.nessus.org\/u?55aa8f57\nhttp:\/\/www.nessus.org\/u?07cc2a06\nhttps:\/\/content-security-policy.com\/\nhttps:\/\/www.w3.org\/TR\/CSP2\/",
+        "IPAddress":"10.10.1.20",
+        "Vulnerabilities":[
             "CVE-2015-2808"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-327"
         ],
-        "IPAddress":"10.10.1.20",
-        "VulnerabilityName":"Missing or Permissive Content-Security-Policy frame-ancestors HTTP Response Header",
-        "ScannerReportedSeverity":null,
-        "HostFindingsID":"74c0da684ef7d99dfd5f18b6d733e99f",
-        "threats":{
+        "Threat":{
             "EPSS_epss_value":0.34742,
             "EPSS_percentile":0.9685,
             "NVD_weaknesses":"CWE-327",
@@ -1414,30 +1440,31 @@
                 "https:\/\/www.secpod.com\/blog\/cve-2015-2808-bar-mitzvah-attack-in-rc4-2\/"
             ]
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":50344,
-        "ScannerSeverity":null,
-        "Description":"The remote web server in some responses sets a permissive Content-Security-Policy (CSP) frame-ancestors response header or does not set one at all.\n\nThe CSP frame-ancestors header has been proposed by the W3C Web Application Security Working Group as a way to mitigate cross-site scripting and clickjacking attacks. The remote web server does not take steps to mitigate a class of web application vulnerabilities.",
+        "Date":"2025-12-18"
+    },
+    {
+        "Host Findings ID":"6d9ae9433ad9c4e1d729c0182940ab52",
+        "VRR Score":64.35,
+        "Scanner Name":"Nessus",
+        "Scanner plugin ID":50345,
+        "Vulnerability name":"Missing or Permissive X-Frame-Options HTTP Response Header",
+        "Scanner Reported Severity":null,
+        "Scanner Severity":null,
+        "Description":"The remote web server in some responses sets a permissive X-Frame-Options response header or does not set one at all.\n\nThe X-Frame-Options header has been proposed by Microsoft as a way to mitigate clickjacking attacks and is currently supported by all major browser vendors The remote web server does not take steps to mitigate a class of web application vulnerabilities.",
         "Status":"Open",
         "Port":80,
         "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Set a non-permissive Content-Security-Policy frame-ancestors header for all requested resources.",
-        "PossiblePatches":"http:\/\/www.nessus.org\/u?55aa8f57\nhttp:\/\/www.nessus.org\/u?07cc2a06\nhttps:\/\/content-security-policy.com\/\nhttps:\/\/www.w3.org\/TR\/CSP2\/"
-    },
-    {
-        "vrr_score":64.35,
-        "vulnerabilities":[
+        "Plugin Output":"",
+        "Possible Solutions":"Set a properly configured X-Frame-Options header for all requested resources.",
+        "Possible patches":"https:\/\/en.wikipedia.org\/wiki\/Clickjacking\nhttp:\/\/www.nessus.org\/u?399b1f56",
+        "IPAddress":"10.10.1.20",
+        "Vulnerabilities":[
             "CVE-2019-15107"
         ],
-        "weaknesses":[
+        "Weaknesses":[
             "CWE-78"
         ],
-        "IPAddress":"10.10.1.20",
-        "VulnerabilityName":"Missing or Permissive X-Frame-Options HTTP Response Header",
-        "ScannerReportedSeverity":null,
-        "HostFindingsID":"6d9ae9433ad9c4e1d729c0182940ab52",
-        "threats":{
+        "Threat":{
             "CISA_required_action":"Apply updates per vendor instructions.",
             "CISA_known_ransomware_campaign_use":"Unknown",
             "CISA_product":"Webmin",
@@ -1464,15 +1491,6 @@
             "Metasploit_type":"exploit",
             "Metasploit_platform":"Linux,Unix"
         },
-        "ScannerName":"Nessus",
-        "ScannerPluginID":50345,
-        "ScannerSeverity":null,
-        "Description":"The remote web server in some responses sets a permissive X-Frame-Options response header or does not set one at all.\n\nThe X-Frame-Options header has been proposed by Microsoft as a way to mitigate clickjacking attacks and is currently supported by all major browser vendors The remote web server does not take steps to mitigate a class of web application vulnerabilities.",
-        "Status":"Open",
-        "Port":80,
-        "Protocol":"tcp",
-        "PluginOutput":"",
-        "PossibleSolutions":"Set a properly configured X-Frame-Options header for all requested resources.",
-        "PossiblePatches":"https:\/\/en.wikipedia.org\/wiki\/Clickjacking\nhttp:\/\/www.nessus.org\/u?399b1f56"
+        "Date":"2025-12-18"
     }
 ]

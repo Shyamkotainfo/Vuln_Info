@@ -21,6 +21,7 @@ show_help() {
     echo "  process [file] [uri]  Directly process a CSV (No API needed)"
     echo "  etl        Run the full ETL pipeline (Bronze -> Gold)"
     echo "  analytics  Run Analytics (Init Schema + Calculate Facts)"
+    echo "  sync       Sync Risk Intelligence from Local to Atlas"
     echo "  all        Run ETL followed by Analytics"
     echo "  help       Show this help message"
 }
@@ -49,6 +50,10 @@ case "$1" in
         python3 analytics_stream/init_schema.py
         echo -e "${GREEN}Calculating Risk Scores (Facts)...${NC}"
         python3 analytics_stream/calculate_facts.py
+        ;;
+    sync)
+        echo -e "${GREEN}Syncing Risk Intelligence to Atlas...${NC}"
+        python3 scripts/migration/targeted_atlas_sync.py
         ;;
     all)
         echo -e "${GREEN}Running Full Project Suite...${NC}"

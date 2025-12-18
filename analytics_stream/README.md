@@ -40,6 +40,17 @@ The system uses a **Configuration-Driven Dimensional Model**:
 
 ## Usage
 
+The recommended way to run the analytics engine is through the unified runner:
+
+```bash
+# Initialize schema & dimensions
+./local_run.sh analytics
+
+# Run full project suite (ETL + Analytics)
+./local_run.sh all
+```
+
+### Manual Execution (Advanced)
 1.  **Initialize Schema**:
     ```bash
     python3 analytics_stream/init_schema.py
